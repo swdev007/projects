@@ -1,0 +1,181 @@
+<ng-container *ngIf="tokenData">
+    <ng-container  *ngIf="bannerData">
+        <app-banner [showShare]="bannerData?.bought || false" className="banner--inner" [showContent]="false" [whiteListedCollector]="whiteListedCollector" [bannerOverlay]="bannerData"></app-banner>
+    </ng-container>
+
+<div class="page-content container">
+    <div class="page-content__wrap dflex justifyBetween">
+        <div class="page-content__left">
+
+            <!-- caption -->
+            <div class="page-content__caption">
+                <h6 *ngIf="tokenData?.totalTokenCount">EDITIONS {{ (tokenData.totalTokenCount || 0) - (tokenData.sales || 0)}} / {{ tokenData.totalTokenCount}}</h6>
+                <h1>{{ tokenData?.title }}</h1>
+            </div>
+
+            <!-- author -->
+            <div class="page-content__author">
+                <h6>Creator & owner</h6>
+                <app-profile-button (action)="goToProfile()" [details]="profileDetails"></app-profile-button>
+            </div>
+        </div>
+
+        <div class="page-content__right">
+
+            <!-- price -->
+            <div class="page-content__price" *ngIf="showBuy && +tokenData.price > 0">
+                <h6>Price</h6>
+                <h2>{{ priceInETH | fixed }} ETH <span *ngIf="priceInUSD">(${{ priceInUSD | fixed : 2 : '$' }})</span></h2>
+                <app-button *ngIf="!canBuy() && loggedIn" [label]="'Sold Out'" class="lg" customClass="full" type="primary" [isDisabled]="true"></app-button>
+                <app-button *ngIf="showBuy && canBuy() && whiteListedCollector && loggedIn" (action)="goToBuyPage()" [label]="'Buy now'" class="lg" customClass="full" type="primary"></app-button>
+
+                <!-- REQUEST BUTTON ACT AS LOGIN BUTTON WHEN LOGGED OUT -->
+                <app-button *ngIf="showBuy && canBuy() && !whiteListedCollector && loggedIn"(action)="goToRequestPage(tokenData.id)" [isDisabled]="whitelistRequestSubmitted" [label]="whitelistRequestSubmitted ? 'Requested' : 'Request'" class="lg" customClass="full" type="primary"></app-button>
+
+                <!-- CAPTCHA ADDED FOR BOTS -->
+                <app-button (action)="changeCaptchaState(true)"  [isDisabled]="(captchaShown | async) || (metamaskLoading | async) || false" [label]="'REQUEST'" [type]="'primary'" class="lg" customClass="full" type="primary" *ngIf="!loggedIn">
+                    <div postfixContent *ngIf="(captchaShown | async) || (metamaskLoading | async) || false">
+                        <app-button-loader></app-button-loader>
+                    </div>
+                </app-button>
+
+                <!-- REQUEST BUTTON ACT AS LOGIN BUTTON WHEN LOGGED OUT -->
+                <!-- <app-button *ngIf="!loggedIn" [label]="'REQUEST'" class="lg" customClass="full" type="primary" [isDisabled]="(metamaskLoading | async) || false" (action)="connectMetamask()">
+                    <div postfixContent *ngIf="(metamaskLoading | async) || false">
+                        <app-button-loader></app-button-loader>
+                    </div>
+                </app-button> -->
+
+            </div>
+
+
+            <div class="page-content__price" *ngIf="!showBuy && chooseDropDateBasedOnWhitelisting">
+                <h6>{{ whiteListedCollector ? 'Presale begins on ' : 'Dropping on ' }}</h6>
+                <h2 class="is-date">{{  chooseDropDateBasedOnWhitelisting  | date : 'MM.dd.yy' }}</h2>
+                <app-button [label]="'Available soon'" class="lg" customClass="full" type="primary" [isDisabled]="true"></app-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content__wrap dflex justifyBetween">
+        <div class="page-content__left">
+
+            <!-- content -->
+            <div class="page-content__text">
+                <h6>Description</h6>
+                <article [innerHTML]="tokenData?.description" ></article>
+            </div>
+        </div>
+        <div class="page-content__right">
+
+            <!-- history -->
+            <div class="page-content__history">
+                <h6>History</h6>
+                <div class="page-content__history-scroll" (scroll)="scrollHistoryHandler($event)">
+                    <div class="page-content__history-item dflex alignCenter" *ngFor="let history of tokenHistory">
+                        <ng-container *ngIf="history.eventType == actionType.TOKEN_MINTED">
+                            <aside class="flex alignCenter" aria-label="" >
+                                <img [src]="history.artist?.image  || getProfileImage(history.artist?.publicAddress)" alt="Avatar" />
+                                <p>Minted by <a [routerLink]=" '/profile/' +history.artist.publicAddress"> {{ ' @' + history.artist.username }} </a> </p>
+                            </aside>
+                            <span>{{ history?.createdAt | date : 'MM.dd.yy' }} at {{ history?.createdAt | date : 'h:mm a' }} </span> 
+                            <picture (click)="goToPolygonHash(history.transactionId)">
+                                <img src="assets/images/external-arrow.svg" alt="Arrow"/>
+                                <img src="assets/images/external-arrow-green2.svg" alt="Arrow"/>    
+                            </picture>
+                        </ng-container>
+
+                        <ng-container *ngIf="history.eventType === actionType.TOKEN_LISTED">
+                            <aside class="flex alignCenter" aria-label="" >
+                                <img [src]="history.artist?.image  || getProfileImage(history.artist?.publicAddress)" alt="Avatar" />
+                                <p>Listed by <a [routerLink]="'/profile/' + history.artist.publicAddress"> {{ ' @' + history.artist.username }} </a> </p>
+                            </aside>
+                            <span>{{ history?.createdAt | date : 'MM.dd.yy' }} at {{ history?.createdAt | date : 'h:mm a' }} </span> 
+                            <picture (click)="goToPolygonHash(history.transactionId)">
+                                <img src="assets/images/external-arrow.svg" alt="Arrow"/>
+                                <img src="assets/images/external-arrow-green2.svg" alt="Arrow"/>    
+                            </picture>
+                        </ng-container>
+
+                        <ng-container *ngIf="history.eventType === actionType.TOKEN_BOUGHT">
+                            <aside class="flex alignCenter" aria-label="" >
+                                <img [src]="getProfileImage(history.collector?.publicAddress)" alt="Avatar" />
+                                <p>Purchased by <a [routerLink]=" '/profile/' + (history.collector.publicAddress ? history.collector.publicAddress : history.collector.username) ">{{ (history.collector.username && history.collector.username != history.collectorAddress) ?  '@' + history.collector.username : (history.collectorAddress | publicAddress : 10 : 7) }} </a></p>
+                            </aside>
+                            <span>{{ history?.createdAt | date : 'MM.dd.yy' }} at {{ history?.createdAt | date : 'h:mm a' }} </span> 
+                            <picture (click)="goToPolygonHash(history.transactionId)">
+                                <img src="assets/images/external-arrow.svg" alt="Arrow"/>
+                                <img src="assets/images/external-arrow-green2.svg" alt="Arrow"/>    
+                            </picture>
+                        </ng-container>
+                    </div>
+                </div>
+                <ng-container *ngIf="historyLoading">
+                    <div class="page-content__history-skeleton dflex alignCenter" *ngFor="let i of [].constructor(3)">
+                        <app-skeleton type="circle" width="32px" height="32px" style="display: block;"></app-skeleton>
+                        <app-skeleton type="bar" width="40%" height="10px" margin="0 0 0 10px" radius="0"></app-skeleton>
+                        <app-skeleton type="bar" width="40%" height="10px" margin="0 0 0 auto" radius="0"></app-skeleton>
+                    </div>
+                </ng-container>
+            </div>
+
+            <!-- tags -->
+            <div class="page-content__tags" *ngIf="tokenData?.tag?.length">
+                <h6>Tags</h6>
+
+                <ul class="dflex">
+                    <li *ngFor="let tag of tokenData?.tag">
+                        <app-button (click)="goTotag(tag.tag.id)" [label]="tag.tag.name" mode="pill"></app-button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- external -->
+            <div class="page-content__external">
+                <h6>Link to</h6>
+
+                <ul class="dflex">
+                    <li>
+                        <app-button (action)="goToPolygonScan()" label="View on polygonscan" customClass="icon full">
+                            <ng-container postfixContent>
+                                <picture>
+                                    <img src="assets/images/external-arrow-light.svg" alt="Arrow" />
+                                    <img src="assets/images/external-arrow-black.svg" alt="Arrow" />    
+                                </picture>
+                            </ng-container>
+                        </app-button>
+                    </li>
+                    
+                    <li *ngIf="tokenData?.tokenUri" (click)="openUrl(tokenData?.tokenUri || '')">
+                        <app-button label="View metadata" customClass="icon full">
+                            <ng-container postfixContent>
+                                <picture>
+                                    <img src="assets/images/external-arrow-light.svg" alt="Arrow" />
+                                    <img src="assets/images/external-arrow-black.svg" alt="Arrow" />    
+                                </picture>
+                            </ng-container>
+                        </app-button>
+                    </li>
+
+                    <li>
+                        <app-button (action)="openOnOpenSea()" label="View on Opensea" customClass="icon full">
+                            <ng-container postfixContent>
+                                <picture>
+                                    <img src="assets/images/external-arrow-light.svg" alt="Arrow" />
+                                    <img src="assets/images/external-arrow-black.svg" alt="Arrow" />    
+                                </picture>
+                            </ng-container>
+                        </app-button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</ng-container>
+
+
+
+<form #form="ngForm" class="catpcha-block" [ngClass]="{'is-active': (captchaShown | async) && changedCaptchaState ?? false}">
+    <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required  (resolved)="connectMetamask()"></re-captcha>
+</form>

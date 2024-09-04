@@ -1,0 +1,315 @@
+@import "../../../../../assets/scss/variables.scss";
+.page-content {
+    padding-top: 58px;
+    padding-bottom: 68px;
+    border-top: 1px solid $color-white;
+    @include max-screen($tablet) {
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
+    @include max-screen($mobile) {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+    &__wrap {
+        margin-bottom: 30px;
+        &:last-of-type {
+            &:not(:first-child) {
+                margin-top: 107px;
+                @include max-screen($desktop) {
+                    margin-top: 80px;
+                }
+                @include max-screen($tablet) {
+                    margin-top: 60px;
+                }
+                @include max-screen($mobile) {
+                    margin-top: 30px;
+                }
+            }
+        }
+    }
+    &__left {
+        width: 51%;
+        max-width: 570px;
+        padding-right: 20px;
+        @include max-screen($mobile) {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+    &__right {
+        width: 49%;
+        @include max-screen($mobile) {
+            width: 100%;
+        }
+    }
+    &__author {
+        @include max-screen($mobile) {
+            margin-bottom: 15px;
+        }
+        h6 {
+            margin-bottom: 8px;
+        }
+    }
+    &__price {
+        h2 {
+            margin-bottom: 37px;
+            color: $color-primary;
+            text-transform: uppercase;
+            @include max-screen($mobile) {
+                margin-bottom: 20px;
+            }
+            span {
+                display: inline-block;
+                color: $color-dark-gray;
+            }
+            &.is-date {
+                color: $color-light-blue;
+            }
+        }
+        app-button {
+            display: block;
+            margin-bottom: 16px;
+        }
+    }
+    &__text {
+        @include max-screen($mobile) {
+            margin-bottom: 40px;
+        }
+        h6 {
+            margin-bottom: 35px;
+            @include max-screen($tablet) {
+                margin-bottom: 20px;
+            }
+        }
+        p {
+            margin-bottom: 23px;
+            word-break: break-word;
+            @include max-screen($mobile) {
+                margin-bottom: 15px;
+            }
+        }
+        article {
+            word-break: break-word;
+            ::ng-deep {
+                font {
+                    display: block;
+                    font-family: $font-family-base !important;
+                }
+                h6,
+                h2,
+                h3,
+                h4,
+                h5 {
+                    margin-bottom: 10px;
+                }
+                h1 {
+                    @include heading(h2);
+                }    
+            }            
+        }
+    }
+    &__history {
+        margin-bottom: 67px;
+        @include max-screen($tablet) {
+            margin-bottom: 50px;
+        }
+        h6 {
+            margin-bottom: 34px;
+            @include max-screen($mobile) {
+                margin-bottom: 15px;
+            }
+        }
+        &-scroll {
+            overflow-y: auto;
+            max-height: 330px;
+            padding: 2px 10px 2px 0;
+            @extend %customScroll;
+            &::-webkit-scrollbar {
+                width: 1px;
+            }
+        }
+        &-skeleton,
+        &-item {
+            position: relative;
+            margin-bottom: -1px;
+            padding: 15px 30px 15px 0;
+            border-top: 1px solid $color-dark-gray;
+            border-bottom: 1px solid $color-dark-gray;
+            @include max-screen($tablet) {
+                padding: 8px 30px 8px 0;
+            }
+            aside {
+                padding-right: 10px;
+                width: calc(100% - 200px);
+                @include max-screen($desktop-lg){
+                    width: calc(100% - 180px);
+                }
+                @include max-screen($tablet) {
+                    width: 100%;
+                    padding-right: 0;
+                }
+                img {
+                    @include round-image(32px);
+                    @include max-screen($tablet) {
+                        width: 26px;
+                        height: 26px;
+                    }
+                }
+                p {
+                    padding-left: 18px;
+                    word-break: break-word;
+                    width: calc(100% - 32px);
+                    @include max-screen($tablet) {
+                        padding-left: 10px;
+                        width: calc(100% - 26px);
+                    }
+                    a {
+                        color: inherit;
+                        &:hover {
+                           text-decoration: underline;
+                        }
+                    }
+                }  
+            }
+            span {
+                width: 200px;
+                color: $color-dark-gray;
+                @include max-screen($desktop-lg){
+                    width: 180px;
+                }
+                @include max-screen($tablet) {
+                    width: 100%;
+                    padding-left: 36px;
+                }
+            }
+            picture {
+                top: 50%;
+                right: 10px;
+                width: 12px;
+                position: absolute;
+                transform: translateY(-50%);
+                cursor: pointer;
+                @include max-screen($tablet) {
+                    top: 22px;
+                    transform: none;
+                }
+                img {
+                    &:nth-child(2){
+                        top: 50%;
+                        left: 50%;
+                        opacity: 0;
+                        position: absolute;
+                        transform: translate(-50%, -50%);
+                    }    
+                }
+                &:hover {
+                    img {
+                        &:nth-child(1){
+                            opacity: 0;
+                        }
+                        &:nth-child(2){
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+        &-skeleton {
+            padding-right: 0;
+            app-skeleton {
+                ::ng-deep {
+                    span {
+                        display: block;
+                    }    
+                }
+                &:nth-child(2){
+                    width: 50%;
+                }
+                &:nth-child(3){
+                    width: 40%;
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+    &__tags {
+        margin-bottom: 60px;
+        @include max-screen($tablet) {
+            margin-bottom: 40px;
+        }
+        h6 {
+            margin-bottom: 10px;
+        }
+        ul {
+            margin: 0 -8px;
+            @include max-screen($tablet) {
+                margin: 0 -5px;
+            }
+            li {
+                padding: 8px;
+                @include max-screen($tablet) {
+                    padding: 5px;
+                }
+            }
+            ::ng-deep {
+                button {
+                    text-transform: lowercase;
+                }
+            }
+        }
+    }
+    &__external {
+        h6 {
+            margin-bottom: 12px;
+        }
+        ul {
+            margin: 0 -8px;
+            @include max-screen($tablet) {
+                margin: 0 -5px;
+            }
+            li {
+                padding: 8px;
+                min-width: 240px;
+                @include max-screen($tablet) {
+                    padding: 5px;
+                }
+                @include max-screen($mobile) {
+                    width: 100%;
+                }
+            }
+            ::ng-deep {
+                button {
+                    transition: 0.3s ease-in-out;
+                    picture {
+                        display: block;
+                        margin-left: 10px;
+                        position: relative;
+                    }
+                    img {
+                        margin: 0;
+                        transition: 0.3s ease-in-out opacity;
+                        &:nth-of-type(2){
+                            top: 50%;
+                            left: 50%;
+                            opacity: 0;
+                            position: absolute;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+                    &:hover {
+                        img {
+                            &:nth-of-type(1){
+                                opacity: 0;
+                            }
+                            &:nth-of-type(2){
+                                opacity: 1;
+                            }
+                        }    
+                    }
+                }
+            }
+        }
+    }
+}

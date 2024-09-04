@@ -1,0 +1,21 @@
+<!-- circle -->
+<ng-container *ngIf="type === 'circle'" >
+    <ngx-skeleton-loader count="1" [theme]="{  
+        'border-radius': '50%',
+        height: height,
+        width: width,
+        margin:margin
+        }" animation="progress">
+    </ngx-skeleton-loader>
+</ng-container>
+
+<!-- bar -->
+<ng-container *ngIf="type === 'bar'">
+    <ngx-skeleton-loader count="1" [theme]="{  
+        'border-radius': radius,
+        height: height,
+        width: width,
+        margin:margin
+        }" animation="progress">
+    </ngx-skeleton-loader>
+</ng-container>

@@ -1,0 +1,93 @@
+@import '../../../assets/scss/variables.scss';
+.notification {
+    left: 0;
+    z-index: 4;
+    top: 60px;
+    width: 100%;
+    font-size: 16px;
+    position: fixed;
+    text-align: center;
+    padding: 10px 45px;
+    color: $color-black;
+    background: $color-violet;
+    @include max-screen($mobile){
+        top: 51px;
+        font-size: 14px;
+        text-align: left;
+        padding-left: 15px;
+    }
+    strong {
+        font-weight: 400;
+    }
+    a {
+        color: $color-white;
+        &:hover {
+            text-decoration: underline
+        }
+    }
+    &__close {
+        top: 10px;
+        width: 24px;
+        right: 16px;
+        cursor: pointer;
+        position: absolute;
+        @include max-screen($mobile){
+            top: 9px;
+            right: 12px;
+        }
+    }
+    &--success {
+        background: $color-primary; 
+    }
+}
+
+.confirmation {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 15px;
+    flex-wrap: wrap;
+    position: fixed;
+    overflow-y: auto;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+    background: rgba($color-black, 0.8);
+    h2 {
+        font-size: 42px;
+        margin-bottom: 10px;
+    }
+    p {
+        margin-bottom: 32px;
+        @extend %font-size-base;
+    }
+    &__wrap {
+        width: 100%;
+        margin: 0 auto;
+        max-width: 548px;
+        padding: 62px 30px;
+        text-align: center;
+        background: $color-black;
+        border: 1px solid $color-white;
+        @include max-screen($mobile){
+            padding: 30px 20px;
+        }
+    }
+    &__action {
+        margin: 0 auto;
+        max-width: 465px;
+        app-button {
+            width: calc(50% - 12px);
+            &+app-button {
+                margin-left: 24px;
+            }
+        }
+    }
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}

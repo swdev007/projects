@@ -1,0 +1,29 @@
+<div class="profile-content">
+    <div class="profile-content__nav">
+        <!-- <app-button *ngIf="(!profileService.anotherProfile) && profileService.userType == 'artist'" label="Mint new token" (action)="addToken()" type="primary" customClass="full"></app-button> -->
+        <app-profile-tabs type="tab" (changeTab)="changeTab($event)"></app-profile-tabs>
+    </div>
+    <div class="profile-content__content" [ngSwitch]="tabSelected.showTable">
+        <div class="profile-content__content-item">
+            <ng-container *ngSwitchCase="true">
+                <ng-container *ngIf="list.length > 0 ; else noData">
+                    <app-profile-offer-table></app-profile-offer-table>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <ng-container *ngIf="(isLoading || (list && list.length) ); else noData">
+                    <app-card-list [showToolTip]="false" [isLoading]="isLoading" [list]="list" [whiteListedCollector]="collectorWhiteList"
+                        (toolTipEvent)="hideUnhideItem($event)" (clickAction)="redirectToArtwork($event)">
+                    </app-card-list>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<ng-template #noData>
+    <app-no-data type="profile"></app-no-data>
+</ng-template>
+
+<app-confirmation [confirmationData]="confirmationPopupData" (actionEmitter)="popupActionHandler($event)"
+    *ngIf="showConfirmationPopup"></app-confirmation>

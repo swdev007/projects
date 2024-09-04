@@ -1,0 +1,52 @@
+@import "../../../../../assets/scss/variables.scss";
+.not-found {
+    padding: 30px 0;
+    text-align: center;
+    min-height: calc(100vh - 125px);
+    @include max-screen($desktop) {
+        min-height: calc(100vh - 120px);
+    }
+    @include max-screen($mobile) {
+        min-height: calc(100vh - 160px);
+    }
+    p {
+        font-size: 14px;
+        margin-bottom: 30px;
+        @include max-screen($mobile){
+            margin-bottom: 25px;
+        }
+    }
+    h5 {
+        font-size: $font-size-base;
+    }
+    h4 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        @include max-screen($mobile){
+            margin-bottom: 15px;
+        }
+    }
+    h1 {
+        line-height: 1;
+        font-size: 320px;
+        margin-bottom: 25px;
+        @include max-screen($desktop){
+            font-size: 250px;
+        }
+        @include max-screen($tablet){
+            font-size: 200px;
+        }
+        @include max-screen($mobile){
+            font-size: 160px;
+            margin-bottom: 15px;
+        }
+    }
+    app-button {
+        display: block;
+        margin: 0 auto;
+        max-width: 153px;
+    }
+    &__wrap {
+        width: 100%;
+    }
+}

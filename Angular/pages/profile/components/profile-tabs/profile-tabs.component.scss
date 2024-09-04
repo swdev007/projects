@@ -1,0 +1,181 @@
+@import "../../../../../assets/scss/variables.scss";
+.tab-dropdown {
+    position: relative;
+    ul {
+        border-bottom: 1px solid lighten($color-black, 50.2);
+        background: $color-black;
+        @include max-screen($mobile) {
+            left: 0;
+            top: 100%;
+            z-index: 5;
+            width: 100%;
+            display: none;
+            overflow-y: auto;
+            max-height: 265px;
+            position: absolute;
+            background: $color-black;
+            border: 1px solid $color-gray;
+            border-top: 0;
+            border-radius: 0 0 $radius $radius;
+        }
+        ::ng-deep .profile-content & {
+            @include min-screen($mobile) {
+                padding: 20px 200px 0 0;
+            }
+        }
+        li {
+            @include max-screen($mobile) {
+                width: 100%;
+                border-top: 1px solid $color-gray;
+            }
+            & + li {
+                @include max-screen($mobile) {
+                    border-top: 1px solid $color-gray;
+                }
+            }
+            a {
+                display: block;
+                font-weight: 400;
+                padding: 9px 16px;
+                position: relative;
+                color: $color-dark-gray;
+                text-transform: uppercase;
+                @include max-screen($desktop) {
+                    padding: 9px 10px;
+                }
+                @include max-screen($mobile) {
+                    overflow: hidden;
+                    height: 32px;
+                    padding: 8px 16px;
+                    color: $color-gray;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+                &::after {
+                    right: 0;
+                    top: 100%;
+                    width: 0;
+                    height: 1px;
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    background: $color-white;
+                    transition: 0.3s ease-in-out width;
+                    @include max-screen($mobile) {
+                        display: none;
+                    }
+                }
+                &:hover {
+                    color: $color-white;
+                }
+            }
+            &:nth-child(1) {
+                a {
+                    @include min-screen($mobile) {
+                        padding-left: 0;
+                    }
+                }
+            }
+            &.active {
+                a {
+                    color: $color-white;
+                    @include max-screen($mobile) {
+                        color: $color-black;
+                        background: $color-white;
+                    }
+                    &::after {
+                        left: 0;
+                        right: auto;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    &__holder {
+        height: 38px;
+        cursor: pointer;
+        border-radius: $radius;
+        text-transform: uppercase;
+        border: 1px solid $color-gray;
+        padding: 10px 32px 10px 16px;
+        line-height: 1;
+        @extend %ellipsis;
+        @include background-image(arrow-down, svg, calc(100% - 13px), no-repeat, 16px);
+        @include max-screen($tablet){
+            padding-top: 11px;
+            padding-bottom: 11px;
+        }
+        @include max-screen($mobile) {
+            height: 32px;
+            padding: 9px 32px 9px 16px;
+        }
+        &.active {
+            border-bottom: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            @include background-image(arrow-up, svg, calc(100% - 13px), no-repeat, 16px);
+            & + ul {
+                @include max-screen($mobile) {
+                    display: block;
+                }
+            }
+        }
+    }
+    &--dropdown {
+        ul {
+            left: 0;
+            top: 100%;
+            padding: 0;
+            width: 100%;
+            display: none;
+            overflow-y: auto;
+            max-height: 265px;
+            position: absolute;
+            background: $color-black;
+            border: 1px solid $color-gray;
+            border-top: 0;
+            border-radius: 0 0 $radius $radius;
+            li {
+                border-top: 1px solid $color-gray;
+                a {
+                    height: 38px;
+                    overflow: hidden;
+                    padding: 9px 16px;
+                    color: $color-gray;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    @include max-screen($mobile) {
+                        height: 32px;
+                        padding: 8px 16px;
+                    }
+                    &::after {
+                        display: none;
+                    }
+                }
+                &:last-child,
+                &:nth-child(1) {
+                    a {
+                        padding: 9px 16px;
+                        @include max-screen($mobile) {
+                            padding: 8px 16px;
+                        }
+                    }
+                }
+                &.active {
+                    a {
+                        color: $color-black;
+                        background: $color-white;
+                    }
+                }
+            }
+        }
+        .tab-dropdown__holder {
+            &.active {
+                & + ul {
+                    display: block;
+                }
+            }
+        }
+    }
+}

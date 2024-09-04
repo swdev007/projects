@@ -1,0 +1,108 @@
+<header class="header flex alignCenter justifyBetween" id="header" [ngClass]="{'search-active' : inputFocused || searchString.length , 'header--inner' : !isHomePage }">
+    <a class="header__logo" [ngClass]="{'header__logo--animate': animated}" (click)="gotToHome()">
+        <img src="assets/images/logo_name.svg" alt="" />
+        <img class="header__logo-gif" src="assets/images/logo-m.svg" alt="" />
+        <img class="header__logo-gif" src="assets/images/placeholder.gif" alt="" />
+    </a>
+    <!-- Right side -->
+    <aside class="flex alignCenter" *ngIf="nonWhiteListFlow">
+    
+
+        <!-- HIDE LOGIN BUTTONS FOR HOME PAGE -->
+        <ng-container *ngIf="!aboutPage">
+            <div class="header__profile" *ngIf="isLoggedIn && !isLoading">
+                <app-profile-button [matMenuTriggerFor]="loggedIn" [details]="profileDetails"></app-profile-button>
+            </div>
+            <div class="header__profile" *ngIf="isLoading">
+                <app-skeleton class="d-m-none" type="bar" width="130px" height="30px" radius="20px" margin="5px 0 0 0"></app-skeleton>
+                <app-skeleton class="d-m-block" type="circle" width="30px" height="30px" margin="5px 0 0 0"></app-skeleton>
+            </div>
+    
+            <!-- CAPTCHA ADDED FOR BOTS -->
+            <app-button (action)="changeCaptchaState(true)" [isDisabled]="(captchaShown | async ) || (connectMetaMaskLoading | async) || false"  label="Connect MetaMask" mode="pill" class="sm" type="primary" *ngIf="!isLoggedIn && !isLoading">
+                <div postfixContent *ngIf="(captchaShown | async ) || (connectMetaMaskLoading | async)">
+                    <app-button-loader></app-button-loader>
+                </div>
+            </app-button>
+        </ng-container>
+
+        <!-- Connnect metamask Button -->
+        <!-- <app-button [isDisabled]="(connectMetaMaskLoading | async) || false" (action)="connectMetaMask()" label="Connect MetaMask" mode="pill" class="sm" type="primary" *ngIf="!isLoggedIn && !isLoading && showCaptcha">
+            <div postfixContent *ngIf="(connectMetaMaskLoading | async ) || false">
+                <app-button-loader></app-button-loader>
+            </div>
+        </app-button> -->
+        <a class="header__toggle header__toggle--menu" (click)="toggleMenu()" [ngClass]="{'active':openMenu}">
+            <span>Menu Toggle</span>
+        </a>
+
+        <a class="header__toggle header__toggle--sort" (click)="closeFilters()">
+            <span>Close Sort</span>
+        </a>
+    </aside>
+    
+    <div class="header__menu" [ngClass]="{'active':openMenu, 'header__menu--connected': isLoggedIn}" *ngIf="nonWhiteListFlow">
+        <div class="header__menu-wrap">
+            <ul>
+                <!-- <li><a [routerLink]="'collection'">Collection</a></li> -->
+                <!-- <li><a [routerLink]="'about'">About</a></li> -->
+                <li><a [routerLink]="'privacy'">Privacy</a></li>
+                <li><a [routerLink]="'terms'">Terms of Service</a></li>
+                <!-- <li><a [routerLink]="'faq'">FAQ</a></li> -->
+            </ul>
+            <ng-container *ngIf="isLoggedIn">
+                <h6>MY PROFILE</h6>
+                <ul>
+                    <li><a [routerLink]="'profile'">Profile</a></li>
+                    <li><a (click)="logout()">Logout</a></li>
+                </ul>
+            </ng-container>
+
+            <ol class="flex alignCenter justifyEnd">
+      
+            </ol>
+        </div>
+
+        <!-- CAPTCHA ADDED FOR BOTS -->
+        <div class="header__menu-bottom" *ngIf="!isLoggedIn && !isLoading && !aboutPage">
+            <app-button (action)="changeCaptchaState(true)" [isDisabled]="(captchaShown | async ) || (connectMetaMaskLoading | async) || false"  label="Connect MetaMask" mode="pill" class="sm" type="primary" *ngIf="!isLoggedIn && !isLoading">
+                <div postfixContent *ngIf="(captchaShown | async ) || (connectMetaMaskLoading | async)">
+                    <app-button-loader></app-button-loader>
+                </div>
+            </app-button>
+        </div>
+    </div>
+</header>
+
+<!-- Search mat-menu -->
+<mat-menu #searchMenu backdropClass="mat-search"> 
+    <app-search-dropdown (searchHasResult)="checkValueInSearchResult($event)" [searchString]="searchString"></app-search-dropdown>
+</mat-menu>
+
+<!-- logged in mat-menu-->
+<mat-menu #loggedIn backdropClass="user-menu"> 
+    <ul class="header__profile-option">
+        <li>
+            <a (click)="goToRoute('profile')">
+                <picture>
+                    <img src="assets/images/user.svg" alt="User Icon" />
+                    <img src="assets/images/user-pink.svg" alt="User Icon" />
+                </picture>
+                Profile
+            </a>
+        </li>
+        <li>
+            <a (click)="logout()">
+                <picture>
+                    <img src="assets/images/logout.svg" alt="Logout Icon" />
+                    <img src="assets/images/logout-pink.svg" alt="Logout Icon" />
+                </picture>
+                Logout
+            </a>
+        </li>
+    </ul>
+</mat-menu>
+
+<form #form="ngForm" class="catpcha-block" [ngClass]="{'is-active': (captchaShown | async) && changedCaptchaState ?? false}">
+    <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required  (resolved)="connectMetaMask()"></re-captcha>
+</form>

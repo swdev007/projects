@@ -1,0 +1,102 @@
+@import '../../assets/scss/variables.scss';
+.contentMedia {
+    padding: 25px 0;
+    align-items: flex-start;
+    picture {
+        width: 553px;
+        position: relative;
+        padding: 10px 0 30px 30px;
+        @include max-screen($desktop) {
+            width: 450px;
+        }
+        @include max-screen($tablet) {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        @include max-screen($mobile) {
+            padding: 0 0 15px 15px;
+        }
+        &::after {
+            left: 0;
+            bottom: 0;
+            content: '';
+            width: 189px;
+            height: 198px;
+            position: absolute;
+            border-radius: 20px;
+            background-color: $color-primary;
+            @include max-screen($desktop) {
+                width: 150px;
+                height: 150px;
+            }
+            @include max-screen($mobile) {
+                width: 100px;
+                height: 100px;
+                border-radius: 10px;
+            }
+        }
+        img {
+            z-index: 1;
+            width: 100%;
+            position: relative;
+            border-radius: 20px;
+            @include max-screen($mobile) {
+                border-radius: 10px;
+            }
+        }
+    }
+    article {
+        padding-left: 95px;
+        width: calc(100% - 553px);
+        @include background-image(dots, svg, 10px 43%, no-repeat, 50px);
+        @include max-screen($desktop) {
+            width: calc(100% - 450px);
+        }
+        @include max-screen($tablet) {
+            width: 100%;
+            padding-left: 70px;
+            background-position: 0 43%;
+        }
+        @include max-screen($mobile) {
+            padding-left: 40px;
+            background-size: 30px;
+            background-position: 0 20px;
+        }
+        h4 {
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            @include max-screen($mobile) {
+                font-size: 25px;
+            }
+        }
+        p {
+            opacity: 0.7;
+            margin-bottom: 22px;
+            &:last-of-type {
+                @include min-screen($tablet) {
+                    margin-bottom: 50px;
+                }
+            }
+        }
+    }
+    &.isReverse {
+        flex-direction: row-reverse;
+        picture {
+            padding: 10px 30px 30px 0;
+            @include max-screen($mobile) {
+                padding: 0 15px 15px 0;
+            }
+            &::after {
+                right: 0;
+                left: auto;
+            }
+        }
+        article {
+            @include min-screen($tablet) {
+                padding: 0 95px 0 0;
+                background-position: calc(100% - 10px) 43%;
+            }
+        }
+    }
+}

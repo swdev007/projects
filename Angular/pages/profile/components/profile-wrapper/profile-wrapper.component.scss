@@ -1,0 +1,80 @@
+@import "../../../../../assets/scss/variables.scss";
+.profile {
+    position: relative;
+    &__sidebar {
+        width: 255px;
+        @include max-screen($tablet) {
+            width: 100%;
+        }
+        ::ng-deep {
+            ngx-skeleton-loader {
+                span {
+                    display: block;
+                }
+            }
+        }
+        &--skeleton {
+            app-skeleton {
+                &[type="circle"]{
+                    margin-top: -100px;
+                }
+            }
+        }
+    }
+    &__content {
+        padding: 15px 0 92px 175px;
+        width: calc(100% - 255px);
+        @include max-screen($desktop-xl) {
+            padding-left: 150px;
+        }
+        @include max-screen($desktop-lg) {
+            padding-left: 60px;
+        }
+        @include max-screen($desktop) {
+            padding-left: 30px;
+        }
+        @include max-screen($tablet) {
+            width: 100%;
+            padding-left: 0;
+        }
+        @include max-screen($mobile) {
+            padding-bottom: 65px;
+        }
+        &--full {
+            width: 100%;
+            padding-left: 0;
+        }
+    }
+    &__edit {
+        margin-bottom: 35px;
+        @include max-screen($tablet) {
+            top: 80px;
+            right: 25px;
+            position: absolute;
+        }
+        @include max-screen($mobile) {
+            top: 58px;
+        }
+        a {           
+            img {
+                width: 24px;
+                opacity: 0.9;
+                margin-left: 8px;
+                @include max-screen($mobile) {
+                    width: 16px;
+                }
+            }
+            span {
+                color: $color-gray;
+            }
+            &:hover {
+                span {
+                    text-decoration: underline;
+                }
+                img {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

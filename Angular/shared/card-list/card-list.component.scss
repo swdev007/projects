@@ -1,0 +1,64 @@
+@import "../../../assets/scss/variables.scss";
+.token-list {
+    padding-top: 12px;
+    margin-top: -12px;
+    app-no-data {
+        width: 100%;
+        display: block;
+        margin: 20px 0;
+    }
+    &__list {
+        margin: 0 -12px;
+        &-item {
+            display: flex;
+            width: 33.3%;
+            padding: 0 12px;
+            margin-bottom: 30px;
+            @include max-screen($tablet) {
+                width: 50%;
+            }
+            @include max-screen($mobile-sm) {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            ::ng-deep .home-content__list & {
+                @include max-screen($tablet) {
+                    width: 50%;
+                }
+                @include max-screen($mobile){
+                    margin-top: 10px;
+                }
+                @include max-screen($mobile-sm) {
+                    width: 100%;
+                }
+            }
+        }
+        &-skeleton {
+            height: 0;
+            width: 100%;
+            padding-top: 55%;
+            position: relative;
+            app-skeleton {
+                ::ng-deep span {
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                }
+            }
+        }
+        app-card {
+            width: 100%;
+            display: flex;
+        }
+       
+    }
+    &--tags {
+        .token-list__list-item {
+            @include min-screen($desktop-lg){
+                width: 25%;
+            }
+        }
+    }
+}

@@ -1,0 +1,88 @@
+<div class="search-dropdown">
+    <ng-container *ngIf="tokensList.length || tokenLoader">
+        <div class="search-dropdown__group">
+            <h6>NFTS</h6>
+            <div class="search-dropdown__nft flex alignCenter" *ngFor="let token of tokensList"
+                (click)="goToNftDetails(token)">
+                <img [src]="token.cover_image_key || 'assets/images/temp/img.png' " alt="" />
+                <aside>
+                    <h5>{{ token.title }} </h5>
+                    <p>@{{ token.username }}</p>
+                </aside>
+            </div>
+
+            <ng-container *ngIf="tokenLoader">
+                <div class="search-dropdown__skeleton flex alignCenter" *ngFor="let i of [].constructor(2)">
+                    <app-skeleton type="bar" width="70px" height="40px" radius="4px"></app-skeleton>
+                    <app-skeleton type="bar" width="100%" height="10px" margin="0 0 4px 10px"
+                        style="width: calc(100% - 80px);"></app-skeleton>
+                </div>
+            </ng-container>
+
+            <div class="search-dropdown__more flex justifyEnd" (click)="$event.stopPropagation();loadMore('tokens')"
+                *ngIf="!isLoading && (tokensList.length < totalTokensCount)">
+                <span>Load More ({{ totalTokensCount - tokensList.length}})</span>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="users.length || userLoader">
+        <div class="search-dropdown__group">
+
+            <h6>PROFILE</h6>
+            <div class="search-dropdown__people flex alignCenter" *ngFor="let user of users"
+                (click)="goToProfile(user)">
+                <img [src]="user.image ||getProfileImage(user.publicAddress)" alt="" />
+                <p>@{{user.username}}</p>
+            </div>
+            <ng-container *ngIf="userLoader">
+                <div class="search-dropdown__skeleton flex alignCenter" *ngFor="let i of [].constructor(2)">
+                    <app-skeleton type="circle" width="40px" height="40px"></app-skeleton>
+                    <app-skeleton type="bar" width="100%" height="10px" margin="0 0 4px 10px"
+                        style="width: calc(100% - 50px);"></app-skeleton>
+                </div>
+            </ng-container>
+
+            <div class="search-dropdown__more flex justifyEnd" (click)="$event.stopPropagation();loadMore('user')"
+                *ngIf="!isLoading && (users.length < totalUsersCount)">
+                <span>Load More ({{ totalUsersCount - users.length}})</span>
+            </div>
+
+        </div>
+    </ng-container>
+
+
+
+    <ng-container *ngIf="tags.length || tagsLoader">
+        <div class="search-dropdown__group">
+
+            <h6>TAGS</h6>
+            <div class="search-dropdown__tags">
+                <ng-container *ngFor="let tag of tags; let i = index">
+                    <app-button (action)="selectTag(tag)" [label]="tag.name" mode="pill"></app-button>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="tagsLoader">
+                <div class="search-dropdown__tags flex alignCenter">
+                    <app-skeleton type="bar" width="60px" height="40px" radius="32px" margin="0 5px 10px"
+                        *ngFor="let i of [].constructor(4)"></app-skeleton>
+                </div>
+            </ng-container>
+
+            <div class="search-dropdown__more flex justifyEnd" (click)="$event.stopPropagation();loadMore('tags')"
+                *ngIf="!isLoading && (tags.length < totalTagsCount)">
+                <span>Load More ( {{ totalTagsCount - tags.length}})</span>
+            </div>
+
+        </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="!isLoading && !tags.length && !users.length && !tokensList.length">
+        <div class="search-dropdown__nodata">
+            No Data Found
+        </div>
+    </ng-container>
+
+</div>

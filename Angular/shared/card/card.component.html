@@ -1,0 +1,105 @@
+<div class="token-card" *ngIf="cardData" [ngClass]="{'active' : showToolTipForCard,'token-card--square' : squareTypeVideo , 'no-click' :!(cardData?.isListed === undefined  || cardData?.isListed ) }">
+    <a class="token-card__image">
+        <ng-container *ngIf="getShowBannerOrVideo;else gif"> 
+            <!-- Desktop -->
+            <img #image (load)='loaded()' class="d-m-none" [src]="cardData?.cover_image_key ||'assets/images/preview.jpeg'"
+            [alt]="cardData.cover_image_key" [ngStyle]="{'display' : imageLoaded ? 'block' : 'none' }">
+                <!-- Mobile -->
+            <img (load)='loaded()' class="d-m-block" [src]="cardData?.cover_image_key ||'assets/images/preview.jpeg'"
+            [alt]="cardData.vertical_cover_image" [ngStyle]="{'display' : imageLoaded ? 'block' : 'none' }"/>
+
+            <!-- <div class="token-card__loader flex alignCenter justifyCenter" *ngIf="!hideSkeleton" >
+                <img src="assets/images/placeholder.gif" alt="" />
+            </div> -->
+
+            <!-- <canvas #myCanvas *ngIf="!hideSkeleton || !imageLoaded"></canvas> -->
+        </ng-container>
+       
+
+    </a>
+   <div class="token-card__action" *ngIf="showTooltip" [ngClass]="{'active' : showToolTipForCard}">
+        <button mat-button (click)="openMenuAction($event)" [matMenuTriggerFor]="menu" class="menu-trigger">
+            <picture>
+                <img src="assets/images/more.svg" alt="More"/>
+                <img src="assets/images/more-green.svg" alt="More"/>
+            </picture>
+        </button>
+
+        <mat-menu #menu="matMenu" backdropClass="card-tooltip">
+            <button mat-menu-item (click)="toolTipClickEvent()" >
+                <img [src]=" cardData.is_hidden ? 'assets/images/eye-cross.svg' : 'assets/images/eye.svg'" alt="Eye"/>
+                <span> {{ cardData.is_hidden ? 'Unhide' : 'Hide'  }}</span>
+            </button>
+        </mat-menu>
+    </div>
+    <!-- <div class="token-card__action" *ngIf="showTooltip" [ngClass]="{'active' : showToolTipForCard}">
+       <picture (click)="makeToolTipVisible($event)">
+            <img src="assets/images/more.svg" alt="More"/>
+            <img src="assets/images/more-green.svg" alt="More"/>
+       </picture>
+       <div class="token-card__action-option flex alignCenter" (click)="toolTipClickEvent($event)">
+           <img [src]=" cardData.is_hidden ? 'assets/images/eye-cross.svg' : 'assets/images/eye.svg'" alt="Eye"/>
+           <span> {{ cardData.is_hidden ? 'Unhide' : 'Hide'  }}</span>
+       </div>
+    </div> -->
+    <div class="token-card__content">
+        <h6><a [routerLink]="'/artwork/' + cardData.uuid" (click)="$event.stopPropagation()">{{cardData?.title}}</a></h6>
+        <p *ngIf="cardData?.username">
+            <a [routerLink]="'/profile/' + cardData.publicAddress" (click)="$event.stopPropagation()">@{{cardData?.username || '-'}}</a>
+        </p>
+    
+        <ng-container  *ngIf="!(cardData?.isListed === undefined  || cardData?.isListed ); else drop">
+            <span (click)="$event.stopPropagation()">
+                Dropping Soon
+            </span>
+        </ng-container>
+
+         <ng-template #drop>
+            <ng-container *ngIf="cardData?.drop_date">
+                <ng-container *ngIf="soldOut; else dropping"> 
+                    <span (click)="$event.stopPropagation()"> Sold Out</span>
+                </ng-container>
+
+                <ng-template #dropping> 
+                <ng-container *ngIf="showPriceOrDate; else priceIncreased"> 
+                    <span> {{ whiteListedCollector ? 'Presale begins on ' : 'Dropping on ' }} {{  chooseDropDateBasedOnWhitelisting  | date : 'MM.dd.yy' }}</span>
+                </ng-container>
+             
+                <ng-template #priceIncreased> 
+                    <!-- <span (click)="$event.stopPropagation()" *ngIf="(cardData?.ethRaised || 0)> 0">
+                        {{ +(cardData?.ethRaised || 0 )| fixed }} ETH Raised
+                    </span> -->
+                </ng-template>
+                </ng-template>
+            </ng-container>
+        </ng-template>
+     
+    </div>
+</div>
+<ng-template #dummyImage>
+    <img  src="assets/images/placeholder.gif" alt="" />
+</ng-template>
+
+
+<ng-template #gif>
+    <ng-container *ngIf="getCardGif; else video">
+        <!-- Desktop -->
+        <img class="d-m-none" [src]="cardData?.cover_image_key ||'assets/images/preview.jpeg'" [alt]="cardData.cover_image_key">
+    
+        <!-- Mobile -->
+        <img class="d-m-block" [src]="cardData?.cover_image_key ||'assets/images/preview.jpeg'" [alt]="cardData.vertical_cover_image"/>
+
+        <!-- Desktop -->
+        <img class="d-m-none is-gif" [src]="getCardGif" [alt]="getCardGif">
+        <!-- Mobile -->
+        <img class="d-m-block is-gif" [src]="getCardGif" [alt]="getCardGif"/>
+    </ng-container>
+</ng-template>
+
+
+<ng-template #video>
+    <!-- Desktop -->
+    <app-video class="d-m-none" [streamUrl]="nftStreamUrl" [imageUrl]="cardData.cover_image_key || 'assets/images/preview.jpeg'" [type]="videoType" [url]="cardData.nft_file_key || 'assets/video/adventure.mp4'" [uniqueId]="cardData.uuid" (squareVideoEmiiter)="squareVideo()"></app-video>
+    <!-- Mobile -->
+    <app-video class="d-m-block" [streamUrl]="verticalStreamUrl" [imageUrl]="cardData.cover_image_key || 'assets/images/preview.jpeg'" [type]="videoType" [url]="verticalVideo || cardData.nft_file_key || 'assets/video/adventure.mp4'" [uniqueId]="cardData.uuid + '_mobile'"  (squareVideoEmiiter)="squareVideo()"></app-video> 
+</ng-template>

@@ -1,0 +1,149 @@
+@import '../../assets/scss/variables.scss';
+.header {
+    z-index: 9;
+    width: 100%;
+    padding: 30px 0;
+    position: absolute;
+    @include max-screen($tablet) {
+        padding: 20px 0;
+    }
+    &__logo {
+        width: 84px;
+        cursor: pointer;
+    }
+    &__nav {
+        display: flex;
+        align-items: center;
+        @include max-screen($mobile) {
+            top: 0;
+            left: 0;
+            z-index: 5;
+            width: 300px;
+            padding: 20px;
+            height: 100%;
+            position: fixed;
+            overflow-y: auto;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: 0.3s ease-in-out;
+            transform: translateX(-105%);
+            background-color: $color-dark;
+        }
+        &.isActive {
+            transform: translateX(0);
+        }
+        nav {
+            @include max-screen($mobile) {
+                margin-bottom: auto;
+            }
+            a {
+                font-size: 16px;
+                cursor: pointer;
+                color: $color-white;
+                margin: 0 48px 0 13px;
+                @include max-screen($desktop) {
+                    margin-left: 0;
+                }
+                @include max-screen($tablet) {
+                    margin-right: 35px;
+                }
+                @include max-screen($mobile) {
+                    width: 100%;
+                    margin: 0 0 20px;
+                    display: block;
+                }
+                &.active,
+                &:hover {
+                    color: $color-primary;
+                }
+            }
+        }
+        button {
+            @include max-screen($mobile) {
+                width: 100%;
+                min-height: 40px;
+            }
+        }
+    }
+    &__hamburger {
+        width: 25px;
+        height: 15px;
+        display: none;
+        cursor: pointer;
+        position: relative;
+        @include max-screen($mobile) {
+            display: block;
+        }
+        span {
+            top: 50%;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            display: block;
+            text-align: left;
+            position: absolute;
+            text-indent: -9999px;
+            background: $color-primary;
+            transform: translateY(-50%);
+            transition: 0.3s ease-in-out background-color;
+            &:before,
+            &:after {
+                right: 0;
+                width: 100%;
+                height: 2px;
+                position: absolute;
+                background: $color-primary;
+                transition: 0.3s ease-in-out;
+                content: '';
+            }
+            &:before {
+                top: -8px;
+            }
+            &:after {
+                bottom: -8px;
+            }
+        }
+        &.isActive {
+            span {
+                background: transparent;
+
+                &:before {
+                    top: 0;
+                    transform: rotate(-135deg);
+                }
+
+                &:after {
+                    bottom: 0;
+                    transform: rotate(135deg);
+                }
+            }
+        }
+    }
+    &__overlay {
+        display: none;
+        @include max-screen($mobile) {
+            top: 0;
+            left: 0;
+            opacity: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: fixed;
+            visibility: hidden;
+            transition: 0.3s ease-in-out;
+            background-color: rgba($color-black, 0.5);
+        }
+        &.isActive {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    &.isDark {
+        padding: 15px 0;
+        background-color: $color-dark;
+        @include max-screen($tablet) {
+            padding: 20px 0;
+        }
+    }
+}

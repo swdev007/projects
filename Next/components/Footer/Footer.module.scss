@@ -1,0 +1,95 @@
+@import '../../assets/scss/variables.scss';
+.footer {
+    font-size: 16px;
+    padding: 50px 0 0;
+    color: $color-white;
+    background-color: $color-dark;
+    &__main {
+        padding-bottom: 10px;
+        h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        p {
+            opacity: 0.7;
+            margin-bottom: 22px;
+        }
+        article {
+            padding-bottom: 10px;
+            width: calc(100% - 289px);
+            @include max-screen($desktop) {
+                width: calc(100% - 250px);
+            }
+            @include max-screen($mobile) {
+                width: 100%;
+                padding-bottom: 40px;
+            }
+            p {
+                &:last-of-type {
+                    @include min-screen($tablet) {
+                        margin-bottom: 32px;
+                    }
+                }
+            }
+        }
+        aside {
+            width: 173px;
+            @include max-screen($mobile) {
+                width: 100%;
+            }
+            li {
+                margin-bottom: 20px;
+                a {
+                    opacity: 0.7;
+                }
+            }
+            ul {
+                margin: 0 -5px 25px;
+                li {
+                    width: 100%;
+                    padding: 0 5px;
+                    a {
+                        &:hover {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+            ol {
+                list-style: none;
+                a {
+                    color: $color-white;
+                    &:hover {
+                        opacity: 1;
+                        color: $color-primary;
+                    }
+                }
+            }
+        }
+    }
+    &__copyright {
+        padding: 29px 0;
+        border-top: 1px solid $color-dark-alt;
+        @include max-screen($mobile) {
+            justify-content: center;
+        }
+        p {
+            @include max-screen($mobile) {
+                margin-bottom: 20px;
+            }
+        }
+        a {
+            margin: 0 9px;
+            @include max-screen($mobile) {
+                margin: 0 5px;
+            }
+            &:first-child {
+                margin-left: 0;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

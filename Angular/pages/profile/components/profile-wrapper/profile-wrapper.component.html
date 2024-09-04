@@ -1,0 +1,26 @@
+<div class="profile">
+    <app-profile-banner></app-profile-banner>
+    <div class="profile__wrap dflex alignStart container">
+        <div class="profile__sidebar" *ngIf="profileService.profileData && !isLooading">
+            <app-profile-sidebar></app-profile-sidebar>
+        </div>
+
+        <div class="profile__sidebar profile__sidebar--skeleton" *ngIf="isLooading">
+            <app-skeleton type="circle" width="184px" height="184px" margin="0 0 20px" style="display: block;"></app-skeleton>
+            <app-skeleton type="bar" width="60%" height="10px" margin="0 0 10px"></app-skeleton>
+            <app-skeleton type="bar" width="50%" height="10px" margin="0 0 30px"></app-skeleton>
+            <app-skeleton type="bar" width="100%" height="8px" margin="0 0 12px"></app-skeleton>
+            <app-skeleton type="bar" width="80%" height="8px" margin="0 0 12px"></app-skeleton>
+            <app-skeleton type="bar" width="70%" height="8px" margin="0 0 50px"></app-skeleton>        
+        </div>    
+        <div class="profile__content" [ngClass]="{'profile__content--full' : !this.isLooading  && !profileService.profileData}"> 
+            <div class="profile__edit flex justifyEnd">
+                <a *ngIf="profileService.userType && !profileService.anotherProfile" class="flex alignCenter" (click)="navigateToEditProfile()">
+                    <span>Edit Profile</span>
+                    <img src="assets/images/edit.svg" alt="Edit"/>
+                </a>
+            </div>             
+            <app-profile-content *ngIf="!isLooading"></app-profile-content>
+        </div>    
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="profile-info" *ngIf="profileData">
+    <div class="profile-info__avatar">
+        <img [src]=" profileData.image || getProfileImage()" alt="Avatar"/>
+        <span *ngIf="!profileService.anotherProfile" class="flex alignCenter justifyCenter" (click)="goToEditProfile()">
+            <img src="assets/images/edit-green.svg" alt="edit" />
+        </span>
+    </div>
+
+    <h4>@{{profileData.username || ''}}</h4>
+    <div class="profile-info__code">
+        <span (click)="copyPublicAddress(profileService.publicAddress)"> {{ profileService.publicAddress | publicAddress : 10 : 7 }}</span>
+        <div class="profile-info__code-info flex alignCenter">
+            <ng-container *ngIf="showCopiedToolTip; else clickToCopy">
+                <p class="flex alignCenter" *ngIf="showCopiedToolTip">
+                    <img src="assets/images/check-green.svg" alt=""/>
+                    Your hash is copied
+                </p>
+            </ng-container>
+            <ng-template #clickToCopy>
+                <p class="flex alignCenter">
+                    <img src="assets/images/link.svg" alt=""/>
+                    Click to copy
+                </p>
+            </ng-template>
+        </div>
+    </div>
+
+    <p>{{ profileData.bio || ''}}</p>
+
+    <div class="profile-info__social" *ngIf="profileData.twitterUrl || profileData.instagramUrl">
+        <h6>CONNECT</h6>
+        <ul class="flex alignCenter">
+            <li>
+                <a *ngIf="profileData.twitterUrl" target="_blank" [href]="profileData.twitterUrl">
+                    <img src="assets/images/twitter.svg" alt="Twitter"/>
+                    <img src="assets/images/twitter-green.svg" alt="Twitter"/>
+                </a>
+            </li>
+            <li>
+                <a *ngIf="profileData.instagramUrl" target="_blank" [href]="profileData.instagramUrl">
+                    <img src="assets/images/instagram.svg" alt="Instagram"/>
+                    <img src="assets/images/instagram-green.svg" alt="Instagram"/>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

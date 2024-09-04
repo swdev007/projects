@@ -1,0 +1,161 @@
+@import "../../../../../assets/scss/variables.scss";
+.profile-info {
+    margin: -100px 0 30px;
+    @include max-screen($mobile) {
+        margin-top: -60px;
+    }
+    h4 {
+        font-size: 36px;
+        margin-bottom: 12px;
+        @extend %ellipsis;
+    }
+    p {
+        color: $color-gray;
+        margin-bottom: 25px;
+        word-break: break-word;
+        font-size: $font-size-base;
+        @include max-screen($mobile) {
+            margin-bottom: 20px;
+        }
+    }
+    &__avatar {
+        width: 184px;
+        position: relative;
+        margin-bottom: 20px;
+        @include max-screen($tablet) {
+            width: 150px;
+        }
+        @include max-screen($mobile) {
+            width: 112px;
+            margin-bottom: 15px;
+        }
+        > img {
+            border: 1px solid $color-white;
+            @include round-image(184px);
+            @include max-screen($tablet) {
+                width: 150px;
+                height: 150px;
+            }
+            @include max-screen($mobile) {
+                width: 112px;
+                height: 112px;
+            }
+        }
+        span {
+            right: 27px;
+            width: 20px;
+            bottom: 16px;
+            height: 20px;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 50%;
+            position: absolute;
+            background: $color-white;
+            @include max-screen($tablet){
+                right: 20px;
+                bottom: 14px;
+            }
+            @include max-screen($mobile){
+                right: 11px;
+                bottom: 10px;
+            }
+            img {
+                max-height: 100%;
+            }
+        }
+    }
+    &__code {
+        position: relative;
+        margin-bottom: 33px;
+        display: inline-block;
+        @include max-screen($mobile) {
+            margin-bottom: 25px;
+        }
+        span {
+            cursor: pointer;
+            user-select: none;
+            color: $color-dark-gray;
+            font-size: $font-size-base;
+        }
+        &-info {
+            left: 50%;
+            opacity: 0;
+            min-height: 25px;
+            min-width: 108px;
+            padding: 5px 8px;
+            visibility: hidden;
+            position: absolute;
+            border-radius: $radius;
+            background: $color-white;
+            bottom: calc(100% + 10px);
+            transform: translateX(-50%);
+            transition: 0.3s ease-in-out;
+            &::after {
+                top: 100%;
+                left: 50%;
+                content: "";
+                display: block;
+                position: absolute;
+                transform: translateX(-50%);
+                border: 8px solid transparent;
+                border-top-color: $color-white;
+            }
+            img {
+                width: 16px;
+                margin-right: 5px;
+            }
+            p {
+                margin: 0;
+                line-height: 1;
+                font-size: 12px;
+                user-select: none;
+                width: max-content;
+                white-space: nowrap;
+                color: $color-black;
+            }
+        }
+        &:hover {
+            span {
+                color: $color-white;
+            }
+            .profile-info__code-info {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+    &__social {
+        @include min-screen($tablet) {
+            padding-top: 18px;
+        }
+        h6 {
+            margin-bottom: 20px;
+            font-size: $font-size-base;
+        }
+        ul {
+            margin: 0 -8px;
+            li {
+                padding: 0 8px;
+                a {
+                    img {
+                        display: block;
+                        width: 18px;
+                        &:nth-child(2) {
+                            display: none;
+                        }
+                    }
+                    &:hover {
+                        img {
+                            &:nth-child(1) {
+                                display: none;
+                            }
+                            &:nth-child(2) {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

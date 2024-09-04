@@ -1,0 +1,87 @@
+@import '../../../assets/scss/variables.scss';
+.stepper {
+    margin: 32px 0 38px;
+    @include max-screen($mobile) {
+        margin: 30px 0;
+    }
+    li {
+        padding: 0 5px;
+        min-width: 150px;
+        text-align: center;
+        position: relative;
+        color: $color-gray;
+        @include max-screen($mobile){
+            flex: 1;
+            min-width: 0;
+        }
+        &::before,
+        &::after {
+            top: 15px;
+            right: 0;
+            left: 50%;
+            content: "";
+            height: 1px;
+            display: block;
+            background: $color-gray;
+            position: absolute;
+        }
+        &::before {
+            left: 0;
+            right: 50%;
+        }
+        span {
+            z-index: 1;
+            width: 32px;
+            height: 32px;
+            display: block;
+            font-size: 12px;
+            line-height: 28px;
+            border-radius: 50%;
+            margin: 0 auto 4px;
+            position: relative;
+            background: $color-black;
+            border: 1px solid $color-gray;
+        }
+        strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 300;
+            line-height: 1.1;
+        }
+        &.active {
+            color: $color-primary;
+            span {
+                border-color: $color-primary;
+            }
+        }
+        &.completed {
+            color: $color-primary;
+            &::after {
+                background: $color-primary;
+            }
+            span {
+                font-size: 0;
+                border-color: $color-primary;
+                background-color: $color-primary;
+                @include background-image(check, svg, center, no-repeat, 18px);
+            }
+            &+li {
+                &::before {
+                    background: $color-primary;
+                }    
+            }
+        }
+        &:first-child {
+            padding-left: 0;
+            &::before {
+                display: none;
+            }
+        }
+        &:last-child {
+            padding-right: 0;
+            &::after {
+                display: none;
+            }
+        }
+    }
+}

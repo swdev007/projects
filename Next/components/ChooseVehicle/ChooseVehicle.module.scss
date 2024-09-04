@@ -1,0 +1,96 @@
+@import '../../assets/scss/variables.scss';
+.chooseVehicle {
+    min-height: 200px;
+    position: relative;
+    padding: 100px 0 45px;
+    background-color: $color-white;
+    @include max-screen($desktop) {
+        padding-top: 80px;
+    }
+    @include max-screen($tablet) {
+        padding-top: 60px;
+    }
+    @include max-screen($mobile) {
+        padding: 45px 0;
+    }
+    &__bg {
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0.3;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        object-position: center;
+    }
+    &__content {
+        z-index: 1;
+        position: relative;
+    }
+    &__intro {
+        max-width: 815px;
+        line-height: 1.43;
+        margin-bottom: 30px;
+        h2 {
+            font-size: 50px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            @include max-screen($desktop) {
+                font-size: 45px;
+            }
+            @include max-screen($tablet) {
+                font-size: 32px;
+            }
+            @include max-screen($mobile) {
+                font-size: 30px;
+            }
+        }
+        p {
+            font-size: 24px;
+            @include max-screen($tablet) {
+                font-size: 20px;
+            }
+            @include max-screen($mobile) {
+                font-size: 18px;
+            }
+        }
+    }
+    &__slider {
+        overflow: hidden;
+        @include max-screen($mobile) {
+            overflow: visible;
+            margin: 0 -15px;
+        }
+        img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+        :global {
+            .slick-list {
+                margin: 0 -25px;
+                @include max-screen($tablet) {
+                    margin: 0 -15px;
+                }
+                @include max-screen($mobile) {
+                    margin: 0 -5px;
+                }
+            }
+            .slick-slide {
+                padding: 0 25px;
+                @include max-screen($tablet) {
+                    padding: 0 15px;
+                }
+                @include max-screen($mobile) {
+                    padding: 0 5px;
+                }
+            }
+            .slick-dots {
+                margin-top: 35px;
+                @include max-screen($tablet) {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}

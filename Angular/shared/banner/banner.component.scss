@@ -1,0 +1,409 @@
+@import "../../../assets/scss/variables.scss";
+.banner {
+    position: relative;
+    ::ng-deep {
+        .video-block,
+        .video-player {
+            position: static;
+        }
+        video {
+            top: 50%;
+            left: 50%;
+            width: auto !important;
+            height: 100% !important;
+            border-radius: 0 !important;
+            object-fit: inherit !important;
+            position: absolute !important;
+            transform: translate(-50%, -50%);
+        }
+        .video-player__sound,
+        .video-block__sound {
+            @include max-screen($mobile) {
+                top: 20px;
+            }
+        }
+        .video-player__skeleton {
+            img {
+                width: 250px !important;
+                @include max-screen($mobile){
+                    width: 100px !important;
+                }
+            }
+        }
+    }
+    &__wrap {
+        height: 0;
+        overflow: hidden;
+        position: relative;
+        padding-top: 56.25%;
+        &::after {
+            @include max-screen($mobile){
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 30%;
+                content: '';
+                display: block;
+                position: absolute;
+                background: linear-gradient(180deg, rgba($color-black, 0.0001) 0%, $color-black);
+            }
+        }
+        img {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+    }
+    &__social {
+        top: 24px;
+        z-index: 1;
+        right: 73px;
+        text-align: right;
+        position: absolute;
+        @include max-screen($desktop) {
+            right: 44px;
+        }
+        @include max-screen($mobile) {
+            top: 13px;
+            right: 22px;
+        }
+        img {
+            width: 16px;
+            height: auto;
+            position: static;
+            object-fit: unset;
+        }
+        &-holder {
+            cursor: pointer;
+            font-size: 16px;
+            color: $color-dark-gray;
+            &::after {
+                content: "";
+                width: 11px;
+                height: 11px;
+                display: none;
+                margin-left: 9px;
+                border-radius: 50%;
+                border: 2px solid transparent;
+                animation: rotate 5s linear infinite;
+                border-color: $color-primary rgba($color-white, 0.2) $color-primary rgba($color-white, 0.2);
+            }
+            img {
+                margin-left: 8px;
+                &:nth-child(2) {
+                    display: none;
+                }
+            }
+            &.is-active {
+                pointer-events: none;
+                color: $color-primary;
+                &:after {
+                    display: block;
+                }
+                img {
+                    &:nth-child(1) {
+                        display: none;
+                    }
+                    &:nth-child(2) {
+                        display: block;
+                    }
+                }
+                @keyframes rotate {
+                    from {
+                        transform: rotate(-360deg);
+                    }
+                    to {
+                        transform: rotate(360deg);
+                    }
+                }
+            }
+        }
+        &-item {
+            margin-bottom: 8px;
+            position: relative;
+            &:nth-child(1) {
+                display: inline-flex;
+            }
+            ul {
+                opacity: 0;
+                z-index: 1;
+                right: -5px;
+                min-width: 115px;
+                visibility: hidden;
+                position: absolute;
+                top: calc(100% + 5px);
+                border-radius: $radius;
+                background: $color-dark;
+                transition: 0.3s ease-in-out;
+                border: 1px solid lighten($color-black, 23.14);
+                @include max-screen($mobile) {
+                    right: 0;
+                    transform: none;
+                }
+                &::before {
+                    left: 0;
+                    content: "";
+                    width: 100%;
+                    height: 5px;
+                    bottom: 100%;
+                    display: block;
+                    position: absolute;
+                    @include max-screen($mobile) {
+                        height: 10px;
+                    }
+                }
+                app-twitter-share {
+                    display: block;
+                    border-bottom: 1px solid lighten($color-black, 23.14);
+                }
+                ::ng-deep {
+                    li {
+                        & + li {
+                            border-top: 1px solid lighten($color-black, 23.14);
+                        }
+                        a {
+                            padding: 6px 10px;
+                        }
+                        img {
+                            width: 14px;
+                            display: block;
+                            margin-right: 6px;
+                            &:nth-child(2),
+                            &:nth-child(3) {
+                                display: none;
+                            }
+                        }
+                        span {
+                            font-size: 12px;
+                            font-weight: 400;
+                            color: $color-gray;
+                        }
+                        &:hover {
+                            img {
+                                &:nth-child(1) {
+                                    display: none;
+                                }
+                                &:nth-child(2) {
+                                    display: block;
+                                }
+                            }
+                            span {
+                                color: $color-primary;
+                            }
+                        }
+                        &.active {
+                            span {
+                                color: $color-primary;
+                            }
+                            img {
+                                &:nth-child(1),
+                                &:nth-child(2) {
+                                    display: none;
+                                }
+                                &:nth-child(3) {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &:hover {
+                .banner__social-holder {
+                    color: $color-primary;
+                    img {
+                        &:nth-child(1) {
+                            display: none;
+                        }
+                        &:nth-child(2) {
+                            display: block;
+                        }
+                    }
+                }
+                ul {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+    &__counter {
+        top: 90px;
+        left: 60px;
+        z-index: 2;
+        position: absolute;
+        @include max-screen($desktop) {
+            left: 25px;
+        }
+        @include max-screen($mobile) {
+            top: 50px;
+        }
+    }
+    &__content {
+        left: 0;
+        bottom: 0;
+        top: 70px;
+        z-index: 2;
+        width: 100%;
+        overflow-y: auto;
+        padding-top: 20px;
+        position: absolute;
+        padding-bottom: 52px;
+        background: linear-gradient(180deg, rgba($color-black, 0.0001) 0%, $color-black 100%);
+        @extend %customScroll;
+        @include max-screen($mobile) {
+            position: static;
+            overflow: visible;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background: transparent;
+        }
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        h1 {
+            line-height: 1;
+            margin-bottom: 10px;
+            @include min-screen($desktop) {
+                font-size: 52px;
+            }
+            a {
+                color: $color-white;
+                &:hover {
+                    text-decoration: underline;
+                    text-decoration-thickness: 2px;
+                }
+            }
+        }
+        p,
+        &-text {
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 17px;
+            word-break: break-word;
+       }
+        &-wrap {
+            max-width: 446px;
+        }
+        &-buttons {
+            app-button {
+                margin-left: 24px;
+                @include max-screen($mobile-sm) {
+                    width: 100%;
+                    margin: 24px 0 0;
+                }
+                ::ng-deep .button {
+                    min-width: 138px;
+                    @include max-screen($mobile-sm) {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        &--timer {
+            top: 210px;
+            @include max-screen($mobile) {
+                top: 130px;
+            }
+        }
+    }
+    &__skeleton {
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: $color-dark;
+        @include max-screen($desktop) {
+            min-height: 600px;
+        }
+        @include max-screen($tablet) {
+            min-height: 550px;
+        }
+        @include max-screen($mobile) {
+            min-height: 490px;
+        }
+        ::ng-deep {
+            span {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
+        }
+    }
+    &--content {
+        .banner__wrap {
+            width: 100%;
+            min-height: 0;
+            margin-top: -60px;
+            @include max-screen($mobile) {
+                margin-top: -51px;
+            }
+        }
+        ::ng-deep {
+            .video-player__sound,
+            .video-block__sound {
+                @include max-screen($mobile) {
+                    top: 60px !important;
+                }
+            }
+        }
+    }
+    &--image {
+        .banner__wrap {
+            @include max-screen($mobile) {
+                padding-top: 100%;
+            }
+        }
+    }
+    &--square {
+        ::ng-deep {
+            video {
+                min-width: 0;
+                height: 100% !important;
+            }
+        }
+    }
+    &--vertical {
+        .banner__wrap {
+            @include max-screen($mobile) {
+                padding: 0;
+                height: auto;
+            }
+        }
+        ::ng-deep {
+            video {
+                @include max-screen($mobile) {
+                    transform: none;
+                    width: 100% !important;
+                    position: static !important;
+                }
+            }
+        }
+    }
+    &--social {
+        ::ng-deep {
+            .video-player__sound,
+            .video-block__sound {
+                @include max-screen($mobile) {
+                    top: auto !important;
+                    bottom: 15px !important;
+                }
+            }
+        }
+    }
+    &--inner {
+        .banner__wrap {
+            @include min-screen($tablet){
+                padding: 0;
+                height: 80vh;    
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+<div class="tag-search">
+    <div class="tag-search__input">
+        <mat-form-field appearance="fill">
+            <mat-label [ngClass]="{ 'is-hide' : hideLableGetter }">Add Tag</mat-label>
+            <mat-chip-list>
+                <mat-chip *ngFor="let selectedTag of chipsSelected; let i = index">
+                    {{selectedTag.name}}
+                    <button matChipRemove (click)="$event.stopPropagation();removeSelectedTag(selectedTag.id)">x</button>
+                </mat-chip>
+                <mat-chip *ngFor="let selectedTag of dynamicTagsAdded; let i = index">
+                    {{selectedTag.name}}
+                    <button matChipRemove (click)="$event.stopPropagation();removeDynamicTag(i)">x</button>
+                </mat-chip>
+
+                <mat-chip *ngFor="let preselectedTag of preSelectedTags; let i = index">
+                    {{preselectedTag.name}}
+                    <button *ngIf="!readonly" matChipRemove (click)="$event.stopPropagation();removePreselectedTags(i)">x</button>
+                </mat-chip>
+
+                <!-- hide if showSearchDropdown-->
+                <app-button [ngClass]="{'tag-search__hide': showSearchDropdown}" *ngIf="readonly" [isDisabled]="readonly" customClass="sm"
+                    [label]="'ADD TAG'" type="primary"></app-button>
+                <app-button [ngClass]="{'tag-search__hide': showSearchDropdown}" *ngIf="!readonly" [matMenuTriggerFor]="tagsList" (menuOpened)="showSearchDropdownHandler()" (menuClosed)="showSearchDropdownHandler()" [isDisabled]="readonly" customClass="sm"
+                    [label]="'ADD TAG'" type="primary"></app-button>
+                <app-button [ngClass]="{'tag-search__hide' : !showSearchDropdown}" [isDisabled]="readonly" (action)="removeTags()" customClass="sm"
+                    [label]="'REMOVE'" type="primary"></app-button>
+
+                <!-- <app-button customClass="sm d-m-block" (action)="showSearchDropdownHandler()" [label]="showSearchDropdown ? 'REMOVE' : 'ADD'" type="primary"></app-button> -->
+            </mat-chip-list>
+        </mat-form-field>
+    </div>
+
+    <mat-menu #tagsList backdropClass="chips">
+        <div class="tag-search__dropdown flexColumn" [ngClass]="{'active' : showSearchDropdown}" (click)="$event.stopPropagation()">
+            <div class="tag-search__dropdown-input">
+                <input type="Search" placeholder="Search" [(ngModel)]="searchText" (ngModelChange)="changeSearchValue($event)" (keydown.enter)="selectTag(); $event.preventDefault()" />
+            </div>
+            <form class="tag-search__dropdown-results" [formGroup]="form">
+                <ul class="dflex">
+                    <ng-container formArrayName="tags" *ngFor="let tag of tagsArrayform.controls; let i = index">
+                        <li *ngIf="checkIdInSearchedTags(i)">
+                            <label>
+                                <input type="checkbox" [formControlName]="i" />
+                                <span>{{tags[i].name}}</span>
+                            </label>
+                        </li>
+                    </ng-container>
+                    <li class="is-full" *ngIf="noSearchResult">
+                        No Tags found
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </mat-menu>
+
+</div>

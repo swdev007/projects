@@ -1,0 +1,43 @@
+<div class="media-upload dflex alignCenter">
+    <ng-container [ngSwitch]="type">
+        <!-- VIDEO COMPONENT -->
+        <ng-container *ngSwitchCase="media_upload_type.VIDEO_OR_AUDIO">
+            <div class="media-upload__text">
+                <p class="d-m-none">Drop here or click to <span>upload</span></p>
+                <p>File types supported: mp4. Max size: 300 MB</p>
+            </div>
+            <div class="media-upload__input" [ngClass]="{'media-upload__input--uploaded': uploaded }">
+                <input type="file" (change)="onFileSelected($event)"  [(ngModel)]="file" accept="audio/mp3,video/mp4" id="video_audio_upload"/>
+                UPLOAD FILE
+                <app-video [uniqueId]="'video_upload'" *ngIf="uploaded" [type]="video_component_type.VIDEO" [url]="selectedUrl"></app-video>
+                <div class="media-upload__close flex alignCenter" (click)="removeItem()"*ngIf="uploaded">
+                    <img src="assets/images/close.svg" alt="Close"/>
+                </div>
+                <app-progress-bar *ngIf="loading" [width]="+UploadedPercentageGetter"></app-progress-bar>
+            </div>
+            <div class="media-upload__error" *ngIf="fileSizeExceeded">File too large. File is large than 300 MB</div>
+            <div class="media-upload__error" *ngIf="fileTypeMisMatch">File should be Video or Audio</div>
+        </ng-container>
+
+        <!-- IMAGE COMPONENT-->
+        <ng-container *ngSwitchCase="media_upload_type.IMAGE">
+            <div class="media-upload__text">
+                <p class="d-m-none">Drop here or click to <span>upload</span></p>
+                <p>File types supported: jpg, png. Max size: 100 MB <br />and resolution 16:9</p>
+            </div>
+            <div class="media-upload__input" [ngClass]="{'media-upload__input--uploaded': uploaded }">
+                <input type="file" (change)="onFileSelected($event)" [(ngModel)]="file" accept="image/jpg, image/png" id="image_upload"/>
+                UPLOAD FILE
+                <img [src]="selectedUrl" alt="" *ngIf="uploaded" />
+                <div class="media-upload__close flex alignCenter" (click)="removeItem()" *ngIf="uploaded">
+                    <img src="assets/images/close.svg" alt="Close" />
+                </div>
+                <app-progress-bar *ngIf="loading" [width]="+UploadedPercentageGetter"></app-progress-bar>
+            </div>
+            <div class="media-upload__error" *ngIf="fileSizeExceeded">File too large. File is large than 100 MB</div>
+            <div class="media-upload__error" *ngIf="fileTypeMisMatch">File should be an image</div>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault></ng-container>
+    </ng-container>
+</div>

@@ -1,0 +1,107 @@
+<div class="banner" [ngClass]="[className, showContent ?'banner--content' : '', squareTypeVideo ? 'banner--square': '', fullVideo ? 'banner--full' : '', !(bannerOverlay && getShowBannerOrVideo) && verticalVideo !== null ?'banner--vertical':'' , bannerOverlay && getShowBannerOrVideo && !aspect16by9VerticalImage ? 'banner--image' : '', bannerOverlay && getShowBannerOrVideo && aspect16by9VerticalImage ? 'banner--ratioimg' : '', showShare?'banner--social': '']">
+    <div class="banner__wrap">
+        <!-- social options -->
+        <div class="banner__social" *ngIf="showShare">
+            <div class="banner__social-item">
+                <div class="banner__social-holder flex alignCenter justifyEnd">
+                    Share
+                    <img src="assets/images/share.svg" alt="Share"/>
+                    <img src="assets/images/share-green.svg" alt="Share"/>
+                </div>  
+                <ul>
+                    <app-twitter-share [uuid]="bannerOverlay.uuid"></app-twitter-share>
+                    <li (click)="copyCurrentLink()" [ngClass]="{'active' : showCopiedToolTip}">
+                        <a class="flex alignCenter">
+                            <picture>
+                                <img src="assets/images/link-gray.svg" alt="Link"/>
+                                <img src="assets/images/link-green.svg" alt="Link"/>    
+                                <img src="assets/images/check-green.svg" alt="Check"/>    
+                            </picture>
+                            <span>Copy link</span>
+                        </a>
+                    </li>
+                </ul>  
+            </div>
+            <div class="banner__social-item">
+                <div class="banner__social-holder flex alignCenter justifyEnd" [ngClass]="{'is-active': showLoader}" (click)="downloadLinkVideo()">
+                    Download
+                    <ng-container *ngIf="!showLoader">
+                        <img src="assets/images/download.svg" alt="Share"/>
+                        <img src="assets/images/download-green.svg" alt="Share"/>    
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="bannerOverlay && getShowBannerOrVideo && showImageSkeleton && !autoplay" class="banner__skeleton">
+            <app-skeleton type="bar"></app-skeleton>
+        </div>
+        
+        <ng-container *ngIf="bannerOverlay && getShowBannerOrVideo && !autoplay; else video">
+            <!-- Desktop -->
+            <img #image class="d-m-none" (load)='imageLoaded()' [src]="bannerOverlay?.coverImageKey" [ngStyle]="{'display' : !showImage ? 'none' : 'block' }"/>
+            <!-- Mobile -->
+            <img #image2 class="d-m-block" (load)='imageLoadedMobile()' [src]="verticalCoverImage || bannerOverlay?.coverImageKey" [ngStyle]="{'display' : !showImage ? 'none' : 'block' }"/>
+            
+            <!--         
+            <canvas class="d-m-none"  #myCanvas  [ngStyle]="{'display' : showImage ? 'none' : 'block' }"></canvas>
+            <canvas class="d-m-block" #myCanvas2  [ngStyle]="{'display' : showImage ? 'none' : 'block' }"></canvas> -->
+            <ng-container *ngTemplateOutlet="counter"></ng-container>
+        </ng-container>
+    </div>
+
+    <!-- overlay content -->
+    <ng-container *ngIf="showContent && bannerOverlay">
+        <div class="banner__content container dflex alignEnd" [ngClass]="{'banner__content--timer': showContent && isCounterVisible}">
+            <div class="banner__content-wrap">
+                <h1><a [routerLink]="'/artwork/' + bannerOverlay.uuid">{{bannerOverlay?.title }}</a></h1>
+                <div class="banner__content-text d-m-none" [innerHTML]="bannerOverlay?.smallDescription ? bannerOverlay?.smallDescription : bannerOverlay?.description"></div>
+                <div class="banner__content-text d-m-block" [innerHTML]="bannerOverlay?.mobileDescription || bannerOverlay?.smallDescription || bannerOverlay?.description"></div>
+                <!-- <p>{{ bannerOverlay?.smallDescription ? bannerOverlay?.smallDescription : bannerOverlay?.description }}</p> -->
+                <div class="banner__content-buttons dflex">
+                    <app-profile-button
+                        *ngIf="bannerOverlay?.owner?.username"
+                        (action)="goToProfilePage()"
+                        [details]="{ avatar: bannerOverlay?.owner?.image || getProfileImage() , name: bannerOverlay?.owner?.username || '@jenny' }">
+                    </app-profile-button>
+                    
+                    <app-button *ngIf="!soldOut && !getShowBannerOrVideo && whiteListedCollector && loggedIn" (action)="goTobuyPage()"[label]="'BUY NFT'" [type]="'primary'"></app-button>
+                    <app-button *ngIf="soldOut && loggedIn" [label]="'SOLD OUT'" [type]="'primary'" [isDisabled]="true"></app-button>
+                    <!-- REQUEST WHEN LOGGED IN -->
+                    <app-button *ngIf="!soldOut && !getShowBannerOrVideo && !whiteListedCollector && loggedIn" (action)="goToRequestPage(bannerOverlay.id)" [isDisabled]="whitelistRequestSubmitted" [label]=" whitelistRequestSubmitted ? 'REQUESTED' : 'REQUEST'" [type]="'primary'"></app-button>
+                    
+                    <!-- CAPTCHA ADDED FOR BOTS -->
+                    <app-button  (action)="changeCaptchaState(true)" [isDisabled]="(captchaShown | async) || (metamaskLoading | async) || false"   [label]="'REQUEST'" [type]="'primary'" *ngIf="!loggedIn">
+                        <div postfixContent *ngIf="(captchaShown | async) || (metamaskLoading | async)">
+                            <app-button-loader></app-button-loader>
+                        </div>
+                    </app-button>
+
+                    <!-- REQUEST BUTTON ACT AS LOGIN BUTTON WHEN LOGGED OUT -->
+                    <!-- <app-button *ngIf="!loggedIn" [label]="'REQUEST'" [type]="'primary'" [isDisabled]="(metamaskLoading | async) || false" (action)="connectMetamask()">
+                        <div postfixContent *ngIf="(metamaskLoading | async) || false">
+                            <app-button-loader></app-button-loader>
+                        </div>
+                    </app-button> -->
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #video>
+    <app-video class="d-m-none" (fullVideoEmitter)="fullVideo = true" [streamUrl]="nftStreamUrl" (squareVideoEmiiter)="squareVideo()" *ngIf="bannerOverlay?.nftFileKey" [url]="bannerOverlay?.nftFileKey ||'assets/video/adventure.mp4'" [uniqueId]="'banner'"></app-video>
+    <app-video (fullVideoEmitter)="fullVideo = true"  class="d-m-block" [streamUrl]="verticalVideoStreamUrl" (squareVideoEmiiter)="squareVideo()" *ngIf="verticalVideo || bannerOverlay?.nftFileKey" [url]="verticalVideo || bannerOverlay?.nftFileKey || 'assets/video/adventure.mp4'" [uniqueId]="'banner__mobile__view'"></app-video>
+    <ng-container *ngTemplateOutlet="counter"></ng-container>
+</ng-template> 
+
+
+<ng-template #counter>
+    <div class="banner__counter" *ngIf="showContent && chooseDropDateBasedOnWhitelisting && isCounterVisible">
+        <app-counter [whiteListedCollector]="whiteListedCollector" [launchDate]="chooseDropDateBasedOnWhitelisting" (zeroEmitter)="zeroTimeEmitter($event)"></app-counter> 
+    </div>
+</ng-template>
+
+<form #form="ngForm" class="catpcha-block" [ngClass]="{'is-active': (captchaShown | async) && changedCaptchaState ?? false}">
+    <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required  (resolved)="connectMetamask()"></re-captcha>
+</form>

@@ -1,0 +1,21 @@
+
+<ng-container *ngIf="notificationData">
+    <div class="notification" [ngClass]="{ 'notification--success' : notificationData.type === notificationType.SUCCESS }">
+        <p>{{notificationData.message}} <strong>{{ notificationData.to ?  '@' + notificationData.to : ''}}</strong>{{notificationData.date}}<a *ngIf="notificationData.link_text" (click)="goToRoute(notificationData.link|| '')">{{ notificationData.link_text}}</a> </p> 
+        <div class="notification__close" (click)="closeNotification()">
+            <img src="assets/images/close.svg" alt="Close"/>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="confirmationData">
+<div class="confirmation dflex alignCenter active">
+    <div class="confirmation__wrap">
+        <h2 *ngIf="confirmationData?.heading">{{confirmationData?.heading}}</h2>
+        <p *ngIf="confirmationData?.subheading">{{confirmationData?.subheading}}</p>
+        <div class="confirmation__action flex justifyCenter">
+            <app-button label="Ok" customClass="full" (click)="closeConfirmationPopup()" type="primary"></app-button>
+        </div>
+    </div>
+</div>
+</ng-container>

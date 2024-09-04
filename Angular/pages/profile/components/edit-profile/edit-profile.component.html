@@ -1,0 +1,103 @@
+<div class="edit-profile" *ngIf="profileForm">
+    <div class="edit-profile__close" (click)="goToProfile()">
+        <img src="assets/images/close-white.svg" alt="Close"/>
+    </div>
+    <form class="container" [formGroup]="profileForm">
+        <h1>Edit your Profile</h1>
+
+        <div class="edit-profile__wrap dflex">
+            <div class="edit-profile__left" >
+                <div class="edit-profile__group">
+                    <h4>Enter your username.</h4>
+                    <!-- <p>If you want to change your username, just enter your new username.</p> -->
+                    <mat-form-field class="icon-left" appearance="fill">
+                        <img src="assets/images/user2.svg" alt="User"/>
+                        <mat-label>Username</mat-label>
+                        <input matInput formControlName="username" placeholder="Username">
+
+                        <mat-error *ngIf="profileForm.controls.username.hasError('required')">
+                            Username is <strong>required</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="collectorProfile && profileForm.controls.username.hasError('alreadyExistsError')">
+                                {{ profileForm.controls.username.errors?.message }}
+                        </mat-error>
+
+
+                        <mat-error *ngIf="profileForm.controls.username.hasError('whitespace')">
+                            Enter a valid Username 
+                         </mat-error>
+
+                        <mat-error *ngIf="!collectorProfile && profileForm.controls.username.hasError('alreadyExistsError')">
+                            {{ profileForm.controls.username.errors?.message }}
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                
+                <div class="edit-profile__group">
+                    <h4>Enter your email.</h4>
+                    <!-- <p>If you want to change your username, just enter your new username.</p> -->
+                    <mat-form-field class="icon-left disabled" appearance="fill">
+                        <img src="assets/images/email.svg" alt="Email"/>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" readonly placeholder="Email">
+                    </mat-form-field>
+                </div>
+
+                <div class="edit-profile__group">
+                    <h4>Enter your BIO.</h4>
+                    <!-- <p>If you want to change your username, just enter your new username.</p> -->
+                    <mat-form-field appearance="fill">
+                       <mat-label>Description</mat-label>
+                       <textarea matInput formControlName="bio" placeholder="bio"></textarea>
+                       <span class="max-lenght"> {{ profileForm.controls.bio.value.length }} / 300</span>
+                       <mat-error
+                       *ngIf="profileForm.controls.bio.errors?.maxlength">
+                        Bio should be less than 300 characters
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="edit-profile__group edit-profile__group--social">
+                    <h4>Enter your social media.</h4>
+                    <!-- <p>If you want to change your username, just enter your new username.</p> -->
+                    <mat-form-field class="icon-left" appearance="fill">
+                        <img src="assets/images/instagram.svg" alt="instagram"/>
+                       <mat-label>https://Instagram adress</mat-label>
+                       <input matInput formControlName="instagramUrl" placeholder="Instagram Link">
+                    </mat-form-field>
+
+                    <mat-form-field class="icon-left" appearance="fill">
+                        <img src="assets/images/twitter.svg" alt="twitter"/>
+                        <mat-label>https://Twitter adress</mat-label>
+                        <input matInput formControlName="twitterUrl"  placeholder="Twitter Link">
+                     </mat-form-field>
+                </div>
+            </div>
+            <div class="edit-profile__right" >
+                <div class="edit-profile__group">
+                    <h4>Upload a profile photo.</h4>
+                    <!-- <p>If you want to change your username, just enter your new username.</p> -->
+
+                    <app-media-upload (uploadedMediaBlob)="uploadProfile($event)" (uploadedFileUrlEmitter)="uploadProfileImage($event)" [selectedUrl]="profileImage" [type]="MEDIA_UPLOAD_TYPE.IMAGE"></app-media-upload>
+                </div>
+
+                <div class="edit-profile__group">
+                    <h4>Upload a cover image.</h4>
+                    <!-- <p>If you want to change your username, just enter your new username.</p> -->
+
+                    <app-media-upload (uploadedFileUrlEmitter)="uploadCoverImage($event)" [selectedUrl]="profileCover" [type]="MEDIA_UPLOAD_TYPE.IMAGE"></app-media-upload>
+                </div>
+            </div>
+        </div>
+
+        <div class="edit-profile__submit">
+            <app-button [isDisabled]="profileForm.invalid || isLoading" (action)="editProfile()" label="Save" customClass="full lg">
+                <div postfixContent *ngIf="isLoading">
+                    <app-button-loader></app-button-loader>
+                </div>
+            </app-button>
+        </div>
+    </form>    
+</div>

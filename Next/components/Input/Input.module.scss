@@ -1,0 +1,96 @@
+@import "../../assets/scss/variables.scss";
+.inputField {
+    position: relative;
+    margin-bottom: 14px;
+    textarea,
+    input {
+        width: 100%;
+        height: 50px;
+        outline: none;
+        font-size: 16px;
+        appearance: none;
+        padding: 8px 20px;
+        border-radius: 10px;
+        color: $color-dark;
+        background-color: transparent;
+        border: 1px solid $color-gray100;
+        font-family: $font-family-base;
+        &::placeholder {
+            color: $color-gray200;
+        }
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        &[type="number"] {
+            -moz-appearance: textfield;
+        }
+        &:disabled {
+            user-select: none;
+            background-color: $color-gray200;
+        }
+        &::-ms-reveal {
+            display: none;
+        }
+    }
+    input:autofill {
+        background: transparent;
+    }
+    textarea {
+        display: block;
+        height: 136px;
+        resize: none;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    span {
+        font-size: 12px;
+        margin-top: 3px;
+        display: block;
+        padding: 0 3px;
+        color: $color-error;
+    }
+    &__inner {
+        position: relative;
+    }
+    &__visibility,
+    &__icon {
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 38px;
+        height: 100%;
+        display: flex;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        img {
+            max-width: 18px;
+            max-height: 18px;
+        }
+    }
+    &__visibility {
+        left: auto;
+        right: 0;
+        width: auto;
+        cursor: pointer;
+        padding-right: 18px;
+        img {
+            width: 18;
+        }
+    }
+    &.inputPassword {
+        input {
+            padding-right: 40px;
+        }
+    }
+    &.isError {
+        input {
+            border-color: $color-error;
+        }
+    }
+    &.noSpacing {
+        margin-bottom: 0;
+    }
+}

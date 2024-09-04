@@ -1,0 +1,9 @@
+<footer class="footer dflex alignCenter container" [ngClass]="{ 'justifyCenter' : !nonWhiteListFlow , 'justifyBetween' : nonWhiteListFlow }">
+    <ul class="dflex" *ngIf="nonWhiteListFlow">
+        <li *ngFor="let link of quickLinks">
+            <a [routerLink]="'/' + link.url">{{link.name}}</a>
+        </li>
+    </ul>
+
+    <a class="footer__link" [routerLink]="''">abc.xyz</a>
+</footer>

@@ -1,0 +1,14 @@
+<ul class="stepper flex justifyCenter">
+    <li [ngClass]="{'active' : step == 1, 'completed': step > 1}">
+        <span>1</span>
+        <strong>Upload file</strong>
+    </li>
+    <li [ngClass]="{'active' : step == 2, 'completed': step > 2}">
+        <span>2</span>
+        <strong>Add token info</strong>
+    </li>
+    <li [ngClass]="{'active' : step == 3, 'completed': step > 3}">
+        <span>3</span>
+        <strong>Preview</strong>
+    </li>
+</ul>

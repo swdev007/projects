@@ -1,0 +1,6 @@
+<div class="wrapper" [ngClass]="{'loader' : isLoaderPage}">
+    <app-notification></app-notification>
+    <app-header *ngIf="!isLoaderPage" [isHomePage]="isHomePage" [aboutPage]="aboutPage" [nonWhiteListFlow]="nonWhiteListFlow"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer  *ngIf="!isLoaderPage" [nonWhiteListFlow]="nonWhiteListFlow"></app-footer>
+</div>

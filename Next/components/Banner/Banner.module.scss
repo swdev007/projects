@@ -1,0 +1,79 @@
+@import '../../assets/scss/variables.scss';
+.banner {
+    padding: 110px 0;
+    position: relative;
+    background-color: $color-dark;
+    @include max-screen($desktop) {
+        padding: 100px 0 70px;
+    }
+    @include max-screen($mobile) {
+        padding: 70px 0 50px;
+    }
+    &__image {
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0.5;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        object-position: center;
+    }
+    &__content {
+        z-index: 1;
+        max-width: 1065px;
+        line-height: 1.43;
+        position: relative;
+        color: $color-white;
+        h1 {
+            font-size: 60px;
+            font-weight: 600;
+            max-width: 920px;
+            margin-bottom: 5px;
+            @include max-screen($desktop) {
+                font-size: 50px;
+            }
+            @include max-screen($tablet) {
+                font-size: 45px;
+            }
+            @include max-screen($mobile) {
+                font-size: 28px;
+            }
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 45px;
+            @include max-screen($mobile) {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+        }
+    }
+    &__info {
+        margin-bottom: 5px;
+        span {
+            font-size: 70px;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            font-family: $font-family-cursive;
+            @include max-screen($tablet) {
+                font-size: 50px;
+            }
+            @include max-screen($mobile) {
+                font-size: 40px;
+                margin-bottom: 5px;
+            }
+        }
+        img {
+            width: 26px;
+            margin-left: 9px;
+            align-self: flex-end;
+            @include max-screen($tablet) {
+                width: 20px;
+            }
+            @include max-screen($mobile) {
+                width: 15px;
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+
+<app-banner *ngIf="homePageBannerData" [loggedIn]="loggedIn" [whiteListedCollector]="collectorWhiteList" [showContent]="true" [showCounter]="true" [bannerOverlay]="homePageBannerData" (zeroEmitter)="zeroTimeHandler()" [whitelistRequestSubmitted]="whitelistRequestSubmitted"></app-banner>
+<div class="home-content">
+    <div class="home-content__skeleton" *ngIf="showBannerSkeleton">
+        <app-skeleton type="bar"></app-skeleton>
+    </div>
+    <div class="home-content__list container">
+        <app-card-list [loggedIn]="loggedIn" [whiteListedCollector]="collectorWhiteList" [showToolTip]="false" [isLoading]="isLoading" [list]="list" (clickAction)="goToDetailsPage($event)"></app-card-list>
+    </div>    
+</div>

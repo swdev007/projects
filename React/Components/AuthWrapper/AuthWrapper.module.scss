@@ -1,0 +1,69 @@
+@import "../../assets/scss/variables.scss";
+
+.login {
+    min-height: 100%;
+    &__image {
+        width: 50%;
+        position: relative;
+        @include max-screen($mobile) {
+            display: none;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+    &__content {
+        padding: 40px 60px;
+        width: 50%;
+        @include max-screen($tablet) {
+            padding: 40px 25px;
+        }
+        @include max-screen($mobile) {
+            padding: 30px 20px;
+            width: 100%;
+            @include background-image(auth-image, jpeg, center top, no-repeat, cover);
+            z-index: 1;
+            position: relative;
+        }
+        &::after {
+            @include max-screen($mobile) {
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: "";
+                width: 100%;
+                height: 100%;
+                background-color: rgba($color-white, 0.85);
+                z-index: -1;
+            }
+        }
+        img {
+            max-width: 200px;
+            @include max-screen($mobile) {
+                max-width: 150px;
+            }
+        }
+    }
+    &__inner {
+        max-width: 550px;
+        margin: 0 auto;
+        width: 100%;
+        min-height: 100%;
+    }
+    &__form {
+        padding: 20px 0 0;
+        position: relative;
+        flex: 1;
+        h1 {
+            margin: 0 0 60px;
+            @include max-screen($mobile) {
+                margin-bottom: 40px;
+            }
+        }
+    }
+}

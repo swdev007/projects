@@ -1,0 +1,22 @@
+@import "../../../../../assets/scss/variables.scss";
+.profile-content {
+    &__nav {
+        position: relative;
+        margin-bottom: 42px;
+        @include max-screen($mobile) {
+            margin-bottom: 20px;
+        }
+        app-button {
+            @include min-screen($mobile) {
+                z-index: 1;
+                top: 6px;
+                right: 0;
+                position: absolute;
+            }
+            @include max-screen($mobile) {
+                display: block;
+                margin-bottom: 32px;
+            }
+        }
+    }
+}

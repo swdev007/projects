@@ -1,0 +1,15 @@
+@import '../../../assets/scss/variables.scss';
+.no-data {
+    text-align: center;
+    h2 {
+        font-size: 32px;
+        color: $color-gray;
+        margin-bottom: 15px;
+        @include max-screen($mobile){
+            margin-bottom: 5px;
+        }
+    }
+    p {
+        color: $color-dark-gray;
+    }
+}

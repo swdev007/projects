@@ -1,0 +1,25 @@
+ <div class="tab-dropdown" *ngIf="type == 'tab'">
+    <div class="tab-dropdown__holder d-m-block" [ngClass]="{'active' : viewTabsDropdown}" (click)="showDropdown()">
+        {{selectedTab.name}}
+    </div>
+    <ul class="dflex">
+        <li (click)="selectTab(profileTabType.CREATED)" [ngClass]="{'active' : selectedTab == profileTabType.CREATED}"><a>Created</a></li>
+        <li (click)="selectTab(profileTabType.COLLECTION)" [ngClass]="{'active' : selectedTab == profileTabType.COLLECTION}"><a>Collected</a></li>
+        <!-- <li (click)="selectTab(profileTabType.OFFERS)" [ngClass]="{'active' : selectedTab == profileTabType.OFFERS}"><a>Offers</a></li>
+        <li (click)="selectTab(profileTabType.UNLISTED)" [ngClass]="{'active' : selectedTab == profileTabType.UNLISTED}"><a>Unlisted</a></li>
+        <li (click)="selectTab(profileTabType.HIDDEN)" [ngClass]="{'active' : selectedTab == profileTabType.HIDDEN}"><a>Hidden</a></li> -->
+    </ul>
+</div>
+
+<div class="tab-dropdown tab-dropdown--dropdown" *ngIf="type == 'dropdown'">
+    <div class="tab-dropdown__holder" [ngClass]="{'active' : viewTabsDropdown}" (click)="showDropdown()">
+        {{selectedTab.name}}
+    </div>
+    <ul>
+        <li (click)="selectTab(profileTabType.CREATED)" [ngClass]="{'active' : selectedTab == profileTabType.CREATED}"><a>Created</a></li>
+        <li (click)="selectTab(profileTabType.COLLECTION)" [ngClass]="{'active' : selectedTab == profileTabType.COLLECTION}"><a>Collected</a></li>
+        <!-- <li (click)="selectTab(profileTabType.OFFERS)" [ngClass]="{'active' : selectedTab == profileTabType.OFFERS}"><a>Offers</a></li>
+        <li (click)="selectTab(profileTabType.UNLISTED)" [ngClass]="{'active' : selectedTab == profileTabType.UNLISTED}"><a>Unlisted</a></li>
+        <li (click)="selectTab(profileTabType.HIDDEN)" [ngClass]="{'active' : selectedTab == profileTabType.HIDDEN}"><a>Hidden</a></li> -->
+    </ul>
+</div>

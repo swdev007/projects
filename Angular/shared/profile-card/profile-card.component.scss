@@ -1,0 +1,24 @@
+@import '../../../assets/scss/variables.scss';
+.card-about {
+    width: 100%;
+    picture {
+        display: block;
+        margin-bottom: 20px;
+        border-radius: $radius;
+        @include image-ratio("1:1");
+        @include max-screen($mobile){
+            margin-bottom: 12px;
+        }
+    }
+    h5 {
+        color: $color-gray;
+        margin-bottom: 3px;
+        font-size: $font-size-base;
+        @include max-screen($mobile){
+            font-size: 12px;
+        }
+    }
+    p {
+        color: $color-dark-gray;
+    }
+}

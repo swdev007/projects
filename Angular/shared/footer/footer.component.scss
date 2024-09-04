@@ -1,0 +1,87 @@
+@import "../../../assets/scss/variables.scss";
+.footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 16px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    color: $color-gray;
+    position: absolute;
+    background: $color-black;
+    flex-direction: row-reverse;
+    border-top: 1px solid $color-white;
+    @include max-screen($desktop) {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    @include max-screen($mobile) {
+        flex-direction: inherit;
+        align-items: flex-end;
+    }
+    ul {
+        @include max-screen($mobile) {
+            display: block;
+            max-width: 70%;
+            padding-right: 10px;
+        }
+        li {
+            padding-right: 15px;
+            // border-right: 1px solid $color-gray;
+            display: flex;
+            & + li {
+                margin-left: 15px;
+                padding-right: 0;
+                border-right: 0;
+                @include max-screen($mobile) {
+                    margin: 5px 0 0 0;
+                }
+            }
+            @include max-screen($mobile) {
+                border-right: 0;
+                padding-right: 0;
+            }
+            a {
+                color: $color-gray;
+                line-height: 1;
+                &.acitve,
+                &:hover {
+                    color: $color-primary;
+                }
+            }
+        }
+    }
+    ol {
+        list-style: none;
+        width: 18px;
+        margin-left: 15px;
+        li {
+            margin-left: 15px;
+            a {
+                img {
+                    display: block;
+                    width: 18px;
+                    &:nth-child(2) {
+                        display: none;
+                    }
+                }
+                &:hover {
+                    img {
+                        &:nth-child(1) {
+                            display: none;
+                        }
+                        &:nth-child(2) {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &__link {
+        color: $color-gray;
+        &:hover {
+            color: $color-primary;
+        }
+    }
+}

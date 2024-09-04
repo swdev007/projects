@@ -1,0 +1,89 @@
+@import '../../assets/scss/variables.scss';
+.table {
+    overflow-x: auto;
+    table {
+        width: 100%;
+        min-width: max-content;
+        border-collapse: collapse;
+        tr {
+            td,
+            th {
+                font-size: 16px;
+                text-align: left;
+                padding: 10px 20px;
+            }
+            th {
+                font-weight: 500;
+                color: $color-white;
+                background-color: $color-dark;
+                &:first-child {
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
+                &:last-child {
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                }
+            }
+            td {
+                hyphens: auto;
+                padding-top: 18px;
+                padding-bottom: 18px;
+                word-wrap: break-word;
+                color: rgba($color-black, 0.7);
+                p {
+                    max-width: 300px;
+                }
+            }
+        }
+    }
+    &__chat {
+        border: 0;
+        cursor: pointer;
+        appearance: none;
+        margin-left: 65px;
+        position: relative;
+        background-color: transparent;
+        img {
+            width: 19px;
+        }
+        span {
+            top: -11px;
+            right: -12px;
+            width: 17px;
+            height: 17px;
+            font-size: 10px;
+            position: absolute;
+            border-radius: 50%;
+            color: $color-white;
+            background-color: $color-primary;
+        }
+    }
+    &__carInfo {
+        img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        p {
+            width: calc(100% - 50px);
+        }
+    }
+    &__link {
+        hyphens: auto;
+        max-width: 400px;
+        color: $color-info;
+        word-wrap: break-word;
+        display: inline-block;
+        &:hover {
+            color: $color-info;
+        }
+    }
+    &__nodata {
+        display: block;
+        text-align: center;
+        padding-bottom: 25px;
+    }
+}

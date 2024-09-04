@@ -1,0 +1,16 @@
+<div class="progress-bar flex alignCenter justifyCenter">
+    <div class="d-m-none">
+        <span>{{width}}%</span>
+        <mat-progress-spinner
+            [color]="color"
+            [mode]="mode"
+            [value]="width">
+        </mat-progress-spinner>
+    </div>
+
+    <div class="progress-bar__mobile d-m-block">
+        <div [ngStyle]="{'width': width+'%'}">
+            {{width}}%
+        </div>
+    </div>
+</div>

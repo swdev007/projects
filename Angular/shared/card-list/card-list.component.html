@@ -1,0 +1,23 @@
+<div class="token-list" [ngClass]="className">
+    <div class="token-list__list dflex">
+        <ng-container *ngIf="list?.length; else noDataFound">
+            <div class="token-list__list-item" *ngFor="let item of list">
+                <app-card [videoType]="videoType" [whiteListedCollector]="whiteListedCollector" [cardData]="item" [showTooltip]="showToolTip" (click)="itemClick(item)" (toolTipClick)="toolTipEventHandler($event)"></app-card>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isLoading">
+            <ng-container *ngTemplateOutlet="loading"></ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #noDataFound>
+    <app-no-data *ngIf="!isLoading"></app-no-data>
+</ng-template>
+<ng-template #loading>
+    <div class="token-list__list-item" *ngFor="let i of counter">
+        <div class="token-list__list-skeleton">
+            <app-skeleton type="bar"></app-skeleton>
+        </div>
+    </div>
+</ng-template>

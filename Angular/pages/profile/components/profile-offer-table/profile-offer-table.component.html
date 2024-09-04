@@ -1,0 +1,51 @@
+<div class="offer">
+    <div class="offer__table">
+        <div class="offer__table-row dflex d-m-none alignCenter">
+            <div class="offer__table-cell">
+                <h6>Item</h6>
+            </div>
+            <div class="offer__table-cell">
+                <h6>Price</h6>
+            </div>
+            <div class="offer__table-cell">
+                <h6>Usd</h6>
+            </div>
+            <div class="offer__table-cell">
+                <h6>From</h6>
+            </div>
+            <div class="offer__table-cell">
+                <h6>Expires</h6>
+            </div>
+        </div>
+        <div class="offer__table-row dflex alignCenter" *ngFor="let i of [].constructor(8)">
+            <div class="offer__table-cell">
+                <div class="offer__table-info flex alignCenter">
+                    <img src="assets/images/temp/img.png" alt=""/>
+                    <p>
+                        Chords #6465 
+                        <span class="d-m-block">@brooklynsikiy</span>
+                    </p>
+                </div>
+            </div>
+            <div class="offer__table-cell">
+                0.075 MATIC
+                <span class="d-m-block">$612.34</span>
+            </div>
+            <div class="offer__table-cell d-m-none">$612.34</div>
+            <div class="offer__table-cell d-m-none">
+                <div class="offer__table-user">@brooklynsikiy</div>
+            </div>
+            <div class="offer__table-cell d-m-none">15 May 2020</div>
+            <div class="offer__table-cell">
+                <div class="offer__table-action flex alignCenter">
+                    <app-button label="Reject" customClass="full"></app-button>
+                    <app-button label="Accept" customClass="full" type="primary"></app-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offer__more dflex justifyCenter">
+        <app-button label="SHOW MORE" customClass="full"></app-button>
+    </div>
+</div>
